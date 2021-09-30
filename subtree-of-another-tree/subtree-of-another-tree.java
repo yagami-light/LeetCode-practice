@@ -19,44 +19,28 @@ class Solution {
         return isSubTreeUtil(root,subRoot);
     }
     
-    private boolean isSubTreeUtil(final TreeNode root,final TreeNode subRoot){
-        
+    
+    private boolean isSubTreeUtil(TreeNode root,TreeNode subRoot){
         if(root==null && subRoot==null)
             return true;
-        if(root==null && subRoot!=null)
-            return false;
-        if(root!=null && subRoot==null)
-            return true;
         
+        if(root==null && subRoot != null)
+            return false;
         else{
-            
-            if(root.val==subRoot.val && isSameTree(root,subRoot))
-                return true;
-            else{
-           return  isSubTreeUtil(root.left,subRoot) || isSubTreeUtil(root.right,subRoot);
-            
-            
-            }
-            
+              
+                return isSameTree(root,subRoot) || isSubTreeUtil(root.left,subRoot) || isSubTreeUtil(root.right,subRoot) ; 
             
         }
         
         
     }
     
-    
-    private boolean isSameTree(final TreeNode p,final TreeNode q){
-        if(p==null && q==null)
+    private boolean isSameTree(TreeNode p,TreeNode q){
+        if(p == null && q == null)
             return true;
-        else if(p==null || q==null)
+        if(p==null || q==null )
             return false;
         
-        else return p.val==q.val && isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
-        
-        
-        
+        return p.val ==q.val && isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
     }
-    
-    
-    
 }
