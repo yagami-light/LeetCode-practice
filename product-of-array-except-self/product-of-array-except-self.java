@@ -1,29 +1,28 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-        int n=nums.length;
-        int[] prefix=new int[n];
+        
+        
+        int[] prefixProduct=new int[nums.length];
+        int[] result=new int[nums.length];
         int sum=1;
-        for(int i=1;i<n;i++){
+        for(int i=0;i<nums.length;i++){
             
-            sum*=nums[i-1];
-            prefix[i]=sum;
+            prefixProduct[i]=sum;
+            sum*=nums[i];
+            
         }
         
-        // System.out.println("prefix array "+Arrays.toString(prefix));
-        int[] result=new int[n];
         sum=1;
-        for(int i=n-1;i>=0;i--){
+        for(int i=nums.length-1;i>=0;i--){
             
-           
+            result[i]=sum*prefixProduct[i];
+            sum*=nums[i];
             
-            result[i]=prefix[i]*sum;
-             if(i==0)
-                result[i]=sum;
-            sum=sum*nums[i];
-           
-            // System.out.println("result[i] "+result[i]);
         }
+        
         
         return result;
+        
+        
     }
 }
