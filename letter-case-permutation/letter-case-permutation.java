@@ -1,50 +1,27 @@
 class Solution {
     public List<String> letterCasePermutation(String s) {
-        List<String> list=new ArrayList();
-        list.add(s);
-        letterCasePermUtil(s,list);
-        return list.stream().distinct().collect(Collectors.toList());
+        List<String> result=new ArrayList();
+        char[] array=s.toLowerCase().toCharArray();
+        helperUtil(array,0,result);
+        
+        return result;
         
     }
     
-    
-    private void letterCasePermUtil(String s,List<String> result){
-        int length=s.length();    
-        for(int i=0;i<length;i++){
-            
-            letterCasePerm(s,i,result);
-            
-        }
+    private void helperUtil(char[] array,int index, List<String> result){
         
-        
-      //  return result;
-        
-        
-    }
-    
-    
-    private void letterCasePerm(String s,int i,List<String> result){
-         System.out.println("input  word "+s);          
-
-        if(i>=s.length())
+        if(index==array.length){
+            result.add(new String(array));
             return;
-        
-        else{
-            
-            String prefix=s.substring(0,i);
-            String suffix=s.substring(i+1);
-            String newString=prefix+(Character.isLowerCase(s.charAt(i)) ?  Character.toUpperCase(s.charAt(i)) : Character.toLowerCase(s.charAt(i))) +suffix;
-            System.out.println("word generted "+newString);          
-            result.add(newString);
-            letterCasePerm(newString,i+1,result);
-            letterCasePerm(s,i+1,result);
-
-                     
-            
         }
         
-        
-        
+        helperUtil(array,index+1,result);
+        if(Character.isLetter(array[index])){
+            
+            array[index]=Character.toUpperCase(array[index]);
+            helperUtil(array,index+1,result);
+            array[index]=Character.toLowerCase(array[index]);
+        }
     }
     
     
