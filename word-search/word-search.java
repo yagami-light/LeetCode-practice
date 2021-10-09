@@ -1,20 +1,22 @@
 class Solution {
     public boolean exist(char[][] board, String word) {
+        
+        return existUtil(board,word);
+    }
+    
+    
+    private boolean existUtil(char[][] board,String word){
         int m=board.length;
         int n=board[0].length;
-        
+        char[] wordArray=word.toCharArray();
         for(int i=0;i<m;i++){
-            
             for(int j=0;j<n;j++){
                 
-                
-                if(isWordExist(board,word,board[i][j], i, j))
+                if(wordArray[0]==board[i][j] && existUtilWrap(board,wordArray,0,i,j))
                     return true;
                 
             }
-            
         }
-        
         
         return false;
         
@@ -22,40 +24,32 @@ class Solution {
     }
     
     
-    
-    private boolean isWordExist(char[][] board,String word,char c,int i,int j){
-        char[] wordArray=word.toCharArray();
-        return isWordMatched(board,wordArray,i,j,0);
-        
-        
-    }
-    
-    
-    private boolean isWordMatched(char[][] board,char[] cArray,int indexI,int indexJ,int charIndex){
-        if(charIndex>= cArray.length)
+    private boolean existUtilWrap(char[][] board,char[] word,int index,int i,int j){
+        if(i<0 || j<0 || i==board.length || j==board[0].length)
             return false;
-        
-        if(indexI>=board.length || indexJ >= board[0].length || indexI<0 ||  indexJ<0)
+        if(index>=word.length)
             return false;
-        
-        if(charIndex==cArray.length-1 && board[indexI][indexJ] == cArray[charIndex])
+        if(index==word.length-1 && word[index]==board[i][j]){
+            
             return true;
-        char c=board[indexI][indexJ];
-        if(board[indexI][indexJ] == cArray[charIndex]){
-            board[indexI][indexJ]='1';
-            boolean isFound=  isWordMatched(board,cArray,indexI+1,indexJ,charIndex+1) || 
-                    isWordMatched(board,cArray,indexI-1,indexJ,charIndex+1) ||
-                    isWordMatched(board,cArray,indexI,indexJ+1,charIndex+1) ||
-                    isWordMatched(board,cArray,indexI,indexJ-1,charIndex+1);
             
-            
-            board[indexI][indexJ]=c;
-            return isFound;
         }
+        
+        
+       if(board[i][j]==word[index]){
+           char c=board[i][j];
+           board[i][j]='0';
+           boolean found=  (existUtilWrap(board,word,index+1,i-1,j) ||  existUtilWrap(board,word,index+1,i+1,j) || existUtilWrap(board,word,index+1,i,j-1) || existUtilWrap(board,word,index+1,i,j+1));
+           board[i][j]=c;
+           return found;
+           
+       }
         
         return false;
         
+        
+        
+        
     }
-    
     
 }
