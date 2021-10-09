@@ -1,65 +1,64 @@
 class Solution {
-    public List<Integer> spiralOrder(int[][] matrix) {
+    public List<Integer> spiralOrder(int[][] mat) {
         
-        return sprialOrderUtil(matrix);
+        return spriralOrderUtil(mat);
     }
     
     
-    public List<Integer> sprialOrderUtil(int[][] mat){
-        int m=mat.length;
-        int n=mat[0].length;
-        int top=0;
-        int down=m-1;
-        int left=0;
-        int right=n-1;
-        int dir=0;
+    private List<Integer> spriralOrderUtil(int[][] mat){
         List<Integer> result=new ArrayList();
-       
-        while(left<=right && top<=down){
-            System.out.println("direction "+dir);
-        if(dir==0){
+        int dir=0;
+        int up=0;
+        int down=mat.length-1;
+        int left=0;
+        int right=mat[0].length-1;
+        
+        
+        while(left<=right && up<=down){
             
-            for(int i=left;i<=right;i++){
-                System.out.println("dir 0  "+mat[top][i]);
-                result.add(mat[top][i]);
-               
-            }
-             top++;
-            
-            
-        }
-        else if(dir==1){
-             for(int i=top;i<=down;i++){
-                System.out.println("dir 1  "+mat[i][right]);
-
-                result.add(mat[i][right]);
+            if(dir==0){
+                
+                for(int i=left;i<=right;i++){
+                    result.add(mat[up][i]);
+                }
+                up++;
+                
                 
             }
-            right--;
-        }
-        else if(dir==2){
-             for(int i=right;i>=left;i--){
-                 System.out.println("dir 2  "+mat[down][i]);
-                result.add(mat[down][i]);
-               
+            else if(dir==1){
+                for(int i=up;i<=down;i++){
+                    result.add(mat[i][right]);
+                    
+                }
+                right--;
             }
-             down--;
-        }
-        else if(dir==3){
-              for(int i=down;i>=top;i--){
-                 System.out.println("dir 3  "+mat[i][left]);
-                result.add(mat[i][left]);
-              
+            
+            else if(dir==2){
+                
+                for(int i=right;i>=left;i--){
+                    result.add(mat[down][i]);
+                }
+                down--;
+                
             }
-              left++;
+            
+            else if(dir==3){
+                
+                for(int i=down;i>=up;i--){
+                    result.add(mat[i][left]);
+                }
+                left++;
+                
+            }
+            
+            dir=(dir+1)%4;
+            
+            
+            
         }
-        
-        dir=(dir+1)%4;
-        
-        }
-        
         
         return result;
+        
     }
     
 }
