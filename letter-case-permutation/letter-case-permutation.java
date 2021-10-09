@@ -1,28 +1,42 @@
 class Solution {
     public List<String> letterCasePermutation(String s) {
         List<String> result=new ArrayList();
-        char[] array=s.toLowerCase().toCharArray();
-        helperUtil(array,0,result);
         
-        return result;
+        
+        char[] array=s.toCharArray();
+        StringBuilder str=null;
+        backTrack(array,0, str, result);
+        
+        return result.stream().distinct().collect(Collectors.toList());
         
     }
     
-    private void helperUtil(char[] array,int index, List<String> result){
+    
+    private void backTrack(char[] array,int index,StringBuilder str,List<String> result){
         
         if(index==array.length){
             result.add(new String(array));
             return;
         }
+        backTrack(array,index+1,str,result);
         
-        helperUtil(array,index+1,result);
-        if(Character.isLetter(array[index])){
+        for(int i=index;i<array.length;i++){
             
-            array[index]=Character.toUpperCase(array[index]);
-            helperUtil(array,index+1,result);
-            array[index]=Character.toLowerCase(array[index]);
-        }
+            if(Character.isLetter(array[i])){
+                
+                char c=array[i];
+                array[i]=Character.isLowerCase(array[i]) ? Character.toUpperCase(array[i]) : Character.toLowerCase(array[i]);
+                backTrack(array,i+1,str,result);
+                array[i]=c;
+                
+            }
+            
+                
+              
+            
+            
+        
+        
     }
-    
-    
+    }
 }
