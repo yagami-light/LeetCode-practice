@@ -1,37 +1,46 @@
 class Solution {
     public List<List<Integer>> combinationSum(int[] cand, int target) {
         List<List<Integer>> result=new ArrayList();
+        int currentSum=0;
         
-        backTrack(cand,0,new ArrayList(),result,target);
+        Arrays.sort(cand);
+        backTrack(cand, target, currentSum,new ArrayList(),result,0);
         
         return result;
         
-        
     }
     
-    
-    private void backTrack(int[] cand,int index,List<Integer> tempList,List<List<Integer>> result,int target){
-        if(target<0)
+    private void backTrack(int[] cand,int target,int currentSum,List<Integer> currentList,List<List<Integer>> result,int index){
+        // System.out.println("currentSum "+currentSum);
+        if(currentSum==target){
+            result.add(new ArrayList(currentList));
             return;
-        if(target==0){
-            result.add(new ArrayList(tempList));
+        }
+        
+        if(currentSum>target){
             return;
         }
         
         for(int i=index;i<cand.length;i++){
-            tempList.add(cand[i]);
-            // newTarget=target-nums[i];
-            // if(target>cand[i])
-            backTrack(cand,i,tempList,result,target-cand[i]);
-//             else
-//             backTrack(cand,index+1,tempList,result,target-cand[i]);
-    
-            tempList.remove(tempList.size()-1);
+            
+            currentSum+=cand[i];
+            currentList.add(cand[i]);
+            int temp=cand[i];
+            // // cand[i]=0;
+            backTrack(cand,target,currentSum,currentList,result,i);
+            currentList.remove(currentList.size()-1);
+            currentSum-=cand[i];
+            // cand[i]=temp;
             
             
         }
         
         
     }
+        
+    
+    
+    
+    
     
 }
