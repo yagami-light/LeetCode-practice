@@ -1,36 +1,40 @@
 class Solution {
     public List<List<Integer>> combinationSum2(int[] cand, int target) {
-     
-        List<List<Integer>> result=new ArrayList();
         
+        List<List<Integer>> result=new ArrayList();
+        int currentSum=0;
+        boolean[] checked=new boolean[cand.length];
         Arrays.sort(cand);
-        boolean[] found=new boolean[cand.length];
-        backTrack(cand,0,new ArrayList(),result,target,found);
+        System.out.println("prinitng array "+Arrays.toString(cand));
+        backTrack(cand,target,currentSum,new ArrayList(),result,0,checked);
         
         return result;
-        
         
     }
     
     
-    private void backTrack(int[] cand,int index,List<Integer> tempList,List<List<Integer>> result,int target,boolean[] found){
-        if(target==0){
-            result.add(new ArrayList(tempList));
-            return;
-            
-        }
-        if(target<0)
-            return;
+    
+    private void backTrack(int[] cand,int target, int currentSum,List<Integer> currentList,List<List<Integer>> result,int index,boolean[] checked){
         
+        if(currentSum==target){
+            result.add(new ArrayList(currentList));
+            return;
+        }
+        
+        if(currentSum>target){
+            return;
+        }
         
         for(int i=index;i<cand.length;i++){
-            if(i>index && cand[i]==cand[i-1] || found[i]) continue;
-            // if(tempList.contains(cand[i])) continue;
-            found[i]=true;
-            tempList.add(cand[i]);
-            backTrack(cand,i+1,tempList,result,target-cand[i],found);
-            tempList.remove(tempList.size()-1);
-            found[i]=false;
+            if(checked[i]) continue;
+            if(i>index && cand[i]==cand[i-1] && !checked[i-1]) continue;
+            currentSum+=cand[i];
+            currentList.add(cand[i]);
+            checked[i]=true;
+            backTrack(cand,target,currentSum,currentList,result,i+1,checked);
+            checked[i]=false;
+            currentList.remove(currentList.size()-1);
+            currentSum-=cand[i];
             
         }
         
