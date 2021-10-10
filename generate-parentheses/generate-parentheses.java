@@ -1,35 +1,36 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> result=new ArrayList();
-        helper(n,"",result,0,0);
+        int openCount=0,closeCount=0;
+        backTrack(n,"",openCount,closeCount,result);
+        
+        
         return result;
     }
     
     
-    private void helper(int n, String current,List<String> result,int leftCount,int rightCount){
-        
-        if(current.length()==2*n){
-            result.add(current);
-        }
-        
-       
-        if(leftCount>rightCount){
-            if(leftCount<n)
-            helper(n,current+"(",result,leftCount+1,rightCount);
-            if(rightCount<n && rightCount<leftCount)
-            helper(n,current+")",result,leftCount,rightCount+1);
-            
-            
-        }
-        
-        if(leftCount<n && leftCount==rightCount){
-             helper(n,current+"(",result,leftCount+1,rightCount);
-        }
-        if(rightCount<leftCount){
+    private void backTrack(int n,String currentString,int openCount,int closeCount,List<String> result){
+        if(openCount>n || closeCount > n)
+            return;
+        if(closeCount>openCount)
+                return;
+        if(currentString.length()==2*n){
+            result.add(currentString);
             return;
         }
         
         
+        //)
+        
+        backTrack(n,currentString+"(",openCount+1,closeCount,result);
+
+        if(openCount > closeCount){
+            
+            backTrack(n,currentString+")",openCount,closeCount+1,result);
+        }
+        
+       
         
     }
+    
 }
