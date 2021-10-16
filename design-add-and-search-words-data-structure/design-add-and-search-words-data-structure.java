@@ -1,68 +1,66 @@
 class WordDictionary {
     TrieNode root;
+    
     class TrieNode{
         TrieNode[] children=new TrieNode[26];
-        boolean isWord;
-        
+        boolean isWord=false;
+                
     }
 
     public WordDictionary() {
         root=new TrieNode();
+        
     }
     
     public void addWord(String word) {
         int n=word.length();
         TrieNode node=root;
-        
-        for(int level=0;level<n;level++){
-            int index=word.charAt(level)-'a';
+        for(int i=0;i<n;i++){
+            int index=word.charAt(i)-'a';
             if(node.children[index]==null)
                 node.children[index]=new TrieNode();
-            node=node.children[index];
+                
+            node=node.children[index];            
+                
         }
-        node.isWord=true;        
+        
+        node.isWord=true;
+        
+        
         
     }
     
     public boolean search(String word) {
-       TrieNode node=root;
+        TrieNode node=root;
         
         return searchUtil(word.toCharArray(),node,0);
         
-        
     }
-        
-  
-    private boolean searchUtil(char[] word,TrieNode root,int index){
-        if(index==word.length)
-            return root.isWord;
-        
-       
+    
+    
+    private boolean searchUtil(char[] wordArray,TrieNode node, int index){
+        if(index==wordArray.length)
+            return node.isWord;
         else{
-            char c=word[index];
-            if(c!='.' && root!=null){
-                 return root.children[c-'a']!=null && (searchUtil(word,root.children[c-'a'],index+1));
-                     // return true;
-                
-                
+            char c=wordArray[index];
+            if(c!='.' &&  node!=null){
+               
+                return node.children[c-'a']!=null && searchUtil(wordArray,node.children[c-'a'],index+1);
+               
             }else{
-                
-                for(int i=0;i<root.children.length;i++){
-                    
-                    if(root.children[i]!=null && (searchUtil(word,root.children[i],index+1)))
+                for(int k=0;k<26;k++){
+                    if(node.children[k]!=null && searchUtil(wordArray,node.children[k],index+1))
                         return true;
-                    
                 }
-                
                 return false;
-                
             }
-            
-            
         }
-        
-         // return false;
     }
+    
+    
+    
+    
+    
 }
 
 /**
