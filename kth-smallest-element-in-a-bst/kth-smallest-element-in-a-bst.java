@@ -16,41 +16,35 @@
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         int[] result=new int[2];
-        result[1]=0;
-         kthSamallestUtil(root,k,result);
-        
+         kthSmallestUtil(root,k,0,result);
         return result[0];
     }
     
-    private void kthSamallestUtil(TreeNode root, int k,int[] result){
-        if(null==root)
+    
+    private void kthSmallestUtil(TreeNode root, int k,int count,int[] result){
+        if(root==null)
             return;
-        
         else{
             
-            
-            kthSamallestUtil(root.left,k,result);
-             result[1]++;
-            if(result[1]==k)
-                
-             {   
-                
-                 result[0]=root.val;
+             kthSmallestUtil(root.left,k,count,result);
+                                    result[1]++;
+
+            if(k==result[1]){
+                result[0]=root.val;
                 return;
-              }
-           
+            }
+
             
             
-            kthSamallestUtil(root.right,k,result);
-            
+                 kthSmallestUtil(root.right,k,count,result);
             
         }
         
         
         
-       // return -1;
+        
+        
         
     }
-    
     
 }
