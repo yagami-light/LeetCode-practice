@@ -9,59 +9,50 @@
  */
 public class Codec {
 
-    
-    
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        StringBuilder serializedResult=new StringBuilder();
-
+        StringBuilder str=new StringBuilder();
         if(root==null){
-            
-            serializedResult.append("#"+",");
-        
-            
-        }else{
-            
-            serializedResult.append(root.val+",");
-            
-           serializedResult.append(serialize(root.left));
-            serializedResult.append(serialize(root.right));
-            
-            
-            
+            str.append("#"+",");
         }
         
+        else{
+        str.append(root.val+",");
+        str.append(serialize(root.left));
+        str.append(serialize(root.right));
+        }
         
-       return  new String(serializedResult);
+        return str.toString();
+        
+        
+        
         
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        Deque<String> deque=new LinkedList(new ArrayList(Arrays.asList(data.split(","))));
-        TreeNode root=buildNode(deque);
+        System.out.println("data is "+data);
+        String[] nodeValues=data.split(",");
+        Queue<String> queue=new LinkedList((Arrays.asList(nodeValues)));
+        
+        return buildNode(nodeValues,queue);
+        
+        // return null;
+    }
+    
+    
+    private TreeNode buildNode(String[] nodeValues,Queue<String> queue){
+        String rootValue=queue.remove();
+        if(rootValue.equals("#"))
+            return null;
+        
+        TreeNode root=new TreeNode(Integer.parseInt(rootValue));
+        root.left=buildNode(nodeValues,queue);
+        root.right=buildNode(nodeValues,queue);
         
         return root;
         
         
-    
-    }
-    
-    private TreeNode buildNode(Deque<String> deque){
-        String val=deque.remove();
-        if(val.equals("#"))
-            return null;
-        else{
-            
-            TreeNode root=new TreeNode(Integer.parseInt(val));
-            root.left=buildNode(deque);
-            root.right=buildNode(deque);
-            
-              return root;
-            
-        }
-        
-      
         
     }
     
