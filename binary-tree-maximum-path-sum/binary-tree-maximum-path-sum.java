@@ -15,35 +15,34 @@
  */
 class Solution {
     public int maxPathSum(TreeNode root) {
+        int[] maxSum=new int[1];
+        maxSum[0]=Integer.MIN_VALUE;
+        maxPathSumUtil(root,maxSum);
         
-        int[] result=new int[1];
-        result[0]=Integer.MIN_VALUE;
-        maxPathSumUtil(root,result);
-        
-        return result[0];
+        return maxSum[0];
         
     }
     
     
-    private int maxPathSumUtil(final TreeNode root,final int[] result){
-            if(root==null)    
+    private int maxPathSumUtil(TreeNode root,int []maxSum){
+        if(root==null)
             return 0;
-            int left =maxPathSumUtil(root.left,result);
-            int right=maxPathSumUtil(root.right,result);
-            int maxCurrent=Math.max(Math.max(left,right)+root.val,root.val);
-        
-            int maxSum=Math.max(maxCurrent,(left+root.val+right));
-        
-            int maxGlobal=result[0];
-            maxGlobal=Math.max(maxGlobal,maxSum);
-        
-            result[0]=maxGlobal;
         
         
-            return maxCurrent;
         
+        int left=maxPathSumUtil(root.left,maxSum);
+        int right=maxPathSumUtil(root.right,maxSum);
+        
+        int currentMax=Math.max(Math.max(left,right)+root.val,root.val);
+        
+        int globalMax=Math.max(currentMax,left+right+root.val);
+        
+        maxSum[0]=Math.max(globalMax,maxSum[0]);
+        
+        return currentMax;
         
     }
+    
     
     
 }
