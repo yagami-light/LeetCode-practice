@@ -1,64 +1,67 @@
 class Solution {
-    public List<Integer> spiralOrder(int[][] mat) {
+    public List<Integer> spiralOrder(int[][] matrix) {
+     
         
-        return spriralOrderUtil(mat);
+        
+        return spiralOrderUtil(matrix);
     }
     
     
-    private List<Integer> spriralOrderUtil(int[][] mat){
+    private List<Integer> spiralOrderUtil(int[][] mat){
         List<Integer> result=new ArrayList();
+        int m=mat.length;
+        int n=mat[0].length;
         int dir=0;
-        int up=0;
-        int down=mat.length-1;
+        int top=0;
         int left=0;
-        int right=mat[0].length-1;
+        int right=n-1;
+        int down=m-1;
         
-        
-        while(left<=right && up<=down){
-            
+        while(left<=right && top<=down){
             if(dir==0){
                 
                 for(int i=left;i<=right;i++){
-                    result.add(mat[up][i]);
+                    result.add(mat[top][i]);
+                    
                 }
-                up++;
+                top++;
                 
                 
             }
             else if(dir==1){
-                for(int i=up;i<=down;i++){
-                    result.add(mat[i][right]);
+                
+                  for(int i=top;i<=down;i++){
                     
+                      result.add(mat[i][right]);
+                      
                 }
                 right--;
+                
             }
-            
             else if(dir==2){
                 
-                for(int i=right;i>=left;i--){
-                    result.add(mat[down][i]);
+                  for(int i=right;i>=left;i--){
+                    
+                      result.add(mat[down][i]);
                 }
                 down--;
                 
             }
-            
             else if(dir==3){
-                
-                for(int i=down;i>=up;i--){
+                  for(int i=down;i>=top;i--){
                     result.add(mat[i][left]);
                 }
-                left++;
                 
+                left++;
             }
-            
             dir=(dir+1)%4;
-            
-            
-            
         }
         
         return result;
         
+        
+        
     }
+    
     
 }
