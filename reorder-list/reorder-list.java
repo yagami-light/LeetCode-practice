@@ -11,31 +11,35 @@
 class Solution {
     public void reorderList(ListNode head) {
         
-         reOrderListUtil(head);
+        reorderListUtil(head);
     }
     
-    private ListNode reOrderListUtil(ListNode head){
-        if(head==null || head.next==null || (head!=null && head.next!=null && head.next.next==null))
+    private ListNode  reorderListUtil(ListNode head){
+        if(head==null || head.next==null)
             return head;
-        // System.out.println("value "+head.val);
-        ListNode prev=null;
-        ListNode headNextNode=head.next;
+        if(head!=null && head.next!=null && head.next.next==null)
+            return head;
+        
+        
+        ListNode seocondNode=head.next;
+        ListNode thirdNode=head.next.next;
+        
         ListNode temp=head;
+        ListNode prev=null;
         while(temp.next!=null){
-            prev=temp; 
+             prev=temp;
             temp=temp.next;
-                  
+           
+            
         }
         
         head.next=temp;
-        // System.out.println("prev value"+prev.val);
-        // System.out.println("temp value"+temp.val);
-
         prev.next=null;
-        // System.out.println("headNextNode value "+headNextNode.val);
-        temp.next=reOrderListUtil(headNextNode);
+        temp.next=reorderListUtil(seocondNode);
         
-        return head;    
+        
+        
+        return head;
         
         
     }
