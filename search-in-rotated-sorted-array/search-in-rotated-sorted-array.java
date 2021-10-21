@@ -1,45 +1,44 @@
 class Solution {
     public int search(int[] nums, int target) {
-        
-        int piotIndex=0;
-        for(int i=0;i<nums.length;i++){
-            if(i>1 && (nums[i]<nums[i-1])){
-                piotIndex=i-1;
-                break;
-            }
-         
-            
-            
-            
-        }
-        System.out.println("piotIndex "+piotIndex);
-        int result=searchUtil(nums,target,0,piotIndex);
-        if(result==-1)
-            return searchUtil(nums,target,piotIndex+1,nums.length-1);
-        else
-            return result;
-        
-        
+        int piot=searchUtilPiot(nums,0,nums.length-1);
+        System.out.println("piot index "+piot);
+        return searchUtil(nums,0,nums.length-1,piot,nums.length,target);
         
         
     }
     
-    
-    private int searchUtil(int[] nums, int target, int start, int end ){
+    private int searchUtilPiot(int[] nums, int start,int end){
         if(start>end)
             return -1;
         
+        int mid=(start+end)/2;
+        //4,6,7,0,1,2
+        
+        //6,8,9,0,1,2
+        if(nums[mid]>nums[end])
+            return searchUtilPiot(nums,mid+1,end);
+        if(nums[mid]<nums[start])
+            return searchUtilPiot(nums,start,mid);
+        
+        return start;
+        
+    }
+    
+    
+    
+    private int searchUtil(int[] nums,int start, int end,int piovt,int n,int target){
+        if(start>end)
+            return -1;
         
         int mid=(start+end)/2;
-        if(nums[mid]==target)
-            return mid;
+        int mid2=(mid+piovt)%n;
+        if(nums[mid2]==target)
+            return mid2;
         
-        
-        if(nums[mid]<target)
-            return searchUtil(nums,target,mid+1,end);
-        else
-            return searchUtil(nums,target,start,mid-1);
-        
+        if(nums[mid2]<target)
+            return searchUtil(nums,mid+1,end,piovt,n,target);
+        else return searchUtil(nums,start,mid-1,piovt,n,target);
+            
         
         
         
