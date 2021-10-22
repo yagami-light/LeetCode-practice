@@ -1,23 +1,27 @@
 class Solution {
-    public int[] countBits(final int n) {
-        
-      return  IntStream.rangeClosed(0,n).map(k->countBitsUtil(k)).toArray();
-      
-    }
-    
-    private int countBitsUtil(final int n){
-          int count=0;
-        int number=n;
-        while(number!=0){
-            if((number & 1) == 1){
-                count++;
-            }
-            number=number>>>1;
-            
-            
+    public int[] countBits(int n) {
+        int[] result=new int[n+1];
+        for(int i=0;i<=n;i++){
+            result[i]=countBit(i);
         }
         
-        return count;
+        return result;
+        
+        
     }
+    
+    
+    private int countBit(int n){
+        int result=0;
+        while(n!=0){
+        if((n & 1)==1)
+            result++;
+        n=n>>>1;
+        }
+        return result;
+        
+        
+    }
+    
     
 }
