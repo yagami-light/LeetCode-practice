@@ -10,26 +10,22 @@
  */
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
+        ListNode prev=new ListNode();
         
-        
-        return deleteDupUtil(head);
+       
+        return deleteDuplicatesUtil(head);
         
     }
     
-    private ListNode deleteDupUtil(ListNode head){
-        
-        if(head==null || head.next==null)
+    
+    private ListNode deleteDuplicatesUtil(ListNode head){
+        if(head==null|| head.next==null)
             return head;
+       
         
+        head.next=deleteDuplicatesUtil(head.next);
         
-        
-        if(head.next.val ==head.val){
-            return deleteDupUtil(head.next);
-        }
-        
-        head.next=deleteDupUtil(head.next);
-        return head;
-        
+        return head.val==head.next.val ? head.next : head;
         
     }
     
