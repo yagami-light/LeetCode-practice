@@ -1,35 +1,27 @@
 class Solution {
     public int maxProduct(int[] nums) {
-     
-        return maxProductUtil(nums);
-    }
-    
-    
-    
-    private int maxProductUtil(int[] nums){
-        int minHerePre=nums[0];
-        int maxHerePre=nums[0];
-        int res=nums[0];
-        int maxHere=Integer.MIN_VALUE,minHere=Integer.MAX_VALUE;
+        int maxGlobal=1;
+        int minGlobal=1;
+        int maxProduct=Integer.MIN_VALUE;
+        int currMax=1;
+        int currMin=1;
         
-        for(int i=1;i<nums.length;i++){
+        int n=nums.length;
+        for(int i=0;i<n;i++){
             
+             currMax=Math.max(Math.max(nums[i]*maxGlobal,nums[i]*minGlobal),nums[i]);
+             currMin=Math.min(Math.min(nums[i]*maxGlobal,nums[i]*minGlobal),nums[i]);
             
-            maxHere=Math.max(maxHerePre*nums[i],Math.max(nums[i],minHerePre*nums[i]));
-            minHere=Math.min(maxHerePre*nums[i],Math.min(nums[i],minHerePre*nums[i]));
-            res=Math.max(maxHere,res);
-            maxHerePre=maxHere;
-            minHerePre=minHere;                 
-                             
+            maxProduct=Math.max(maxProduct,Math.max(currMax,currMin));
+            
+            maxGlobal=currMax;
+            minGlobal=currMin;
             
         }
         
-        return res;                             
-
+        
+        return maxProduct;
+        
         
     }
-                             
-                             
-    
-    
 }
