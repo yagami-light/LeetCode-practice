@@ -1,8 +1,8 @@
 class Solution {
     public double[] medianSlidingWindow(int[] nums, int k) {
         
-        PriorityQueue<Integer> max=new PriorityQueue();
-        PriorityQueue<Integer> min=new PriorityQueue(Collections.reverseOrder());
+        PriorityQueue<Integer> min=new PriorityQueue();
+        PriorityQueue<Integer> max=new PriorityQueue(Collections.reverseOrder());
         int resultSize=nums.length-k+1;
         double[] result=new double[resultSize];
         int j=0;
