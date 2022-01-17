@@ -30,7 +30,7 @@ class Solution {
                 
                 if(j>=nums[i-1]){
                     
-                    dp[i][j]= (dp[i-1][j]) || (dp[i-1][j-nums[i-1]]);
+                    dp[i][j]= (dp[i][j]) || (dp[i-1][j-nums[i-1]]);
                     
                 }
                 
