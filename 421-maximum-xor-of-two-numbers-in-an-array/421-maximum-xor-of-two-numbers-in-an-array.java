@@ -1,38 +1,45 @@
 class Solution {
+
+    
+    
+    class Trie {
+        Trie[] children;
+        public Trie() {
+            children = new Trie[2];
+        }
+    }
+    
     public int findMaximumXOR(int[] nums) {
-        
-        int maxResult=0,
-            mask=0;
-        
-        for(int i=31;i>=0;i--){
-            
-            mask=mask | (1<<i);
-            Set<Integer> set=new HashSet();
-            
-            for(int n:nums){
-                int number=n &  mask;
-                set.add(number);
-            }
-            
-            
-            int greedyTry=maxResult | (1<<i);
-            for(int n :set){
-                
-                int newNumber=n ^ greedyTry;
-                if(set.contains(newNumber)){
-                    maxResult=greedyTry;
-                    break;
+        if(nums == null || nums.length == 0) {
+            return 0;
+        }
+        // Init Trie.
+        Trie root = new Trie();
+        for(int num: nums) {
+            Trie curNode = root;
+            for(int i = 31; i >= 0; i --) {
+                int curBit = (num >>> i) & 1;
+                if(curNode.children[curBit] == null) {
+                    curNode.children[curBit] = new Trie();
                 }
-                
-                
+                curNode = curNode.children[curBit];
             }
-            
-            
+        }
+        int max = Integer.MIN_VALUE;
+        for(int num: nums) {
+            Trie curNode = root;
+            int curSum = 0;
+            for(int i = 31; i >= 0; i --) {
+                int curBit = (num >>> i) & 1;
+                if(curNode.children[curBit ^ 1] != null) {
+                    curSum += (1 << i);
+                    curNode = curNode.children[curBit ^ 1];
+                }else {
+                    curNode = curNode.children[curBit];
+                }
             }
-        
-        
-        return maxResult;
-        
-        
+            max = Math.max(curSum, max);
+        }
+        return max;
     }
 }
