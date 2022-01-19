@@ -1,46 +1,84 @@
 class Solution {
+    
+    TrieNode root=new TrieNode();
+    String result="";
+    
+    class TrieNode{
+        
+        TrieNode children[];
+        String  word;
+        
+        public TrieNode(){
+            children=new TrieNode[26];
+            
+        }
+        
+    }
+    
+    private void insert(String word){
+        
+        TrieNode node=root;
+        int length=word.length();
+        for(int level=0;level<length;level++){
+            
+            int index=word.charAt(level)-'a';
+            if(node.children[index]==null){
+                node.children[index]=new TrieNode();
+            }
+            node=node.children[index];
+            
+            
+        }
+        
+        node.word=word;
+        
+        
+        
+        
+    }
+    
+    
+    private void dfs(TrieNode node){
+        if(node == null)
+            return;
+        
+        if(node.word!=null){
+            if(result.length()<node.word.length()){
+                result=node.word;
+                
+            }
+            else if(node.word.length()==result.length() && node.word.compareTo(result)<0){
+                result=node.word;
+                
+                
+            }
+        }
+        
+        
+        for(TrieNode child: node.children){
+            if(child!=null && child.word!=null)
+            dfs(child);
+        }
+        
+        
+        
+    }
+    
+    
+    
     public String longestWord(String[] words) {
         
-        Arrays.sort(words);
-        Set<String> set=new HashSet();
-        System.out.println("print array :"+Arrays.toString(words));
-        
-        String res="";
-        
-        for(String w:words){
+        for(String word:words){
             
-            System.out.println("given string "+w);
-            System.out.println("sub string : "+w.substring(0,w.length()-1));
-            
-            if(w.length() == 1 || set.contains(w.substring(0,w.length()-1))){
-                
-                
-                res = w.length() > res.length() ? w : res;
-                System.out.println("res add :"+res);
-                set.add(w);
-            }
+            insert(word);
         }
         
+        dfs(root);
         
-        return res;
+        return result;
+        
+        
+        
         
     }
-    
-    
-  /*   public String longestWord(String[] words) {
-        Arrays.sort(words);
-        Set<String> built = new HashSet<String>();
-        String res = "";
-        for (String w : words) {
-            if (w.length() == 1 || built.contains(w.substring(0, w.length() - 1))) {
-                res = w.length() > res.length() ? w : res;
-                built.add(w);
-            }
-        }
-        return res;
-    }
-    
-    
-    */
-    
 }
