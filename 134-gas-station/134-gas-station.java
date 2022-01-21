@@ -1,33 +1,33 @@
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
+        int totalGas=0;
+        int totalCost=0;
+        int tank=0;
+        int start=0;
+        int n=gas.length;
         
-        for(int i=0;i<gas.length;i++){
-            if(gas[i] >0 && canCompleteCircle(gas,cost,i,0,i,false))
-                return i;
-        }
-        
-        return -1;
-        
-    }
-    
-    private boolean canCompleteCircle(int[] gas,int[] cost,int index,int currGas,int baseIndex,boolean startedJorney){
-        if(index==baseIndex && startedJorney)
-            return true;
-        
-        
-        currGas=currGas+gas[index];
-        if(currGas>=cost[index]){
+        for(int i=0;i<n;i++){
             
-                return canCompleteCircle(gas,cost,(index+1)%(gas.length),currGas-cost[index],baseIndex,true);
+            totalGas+=gas[i];
+            totalCost+=cost[i];
+            
+            tank+=gas[i]-cost[i];
+            if(tank<0){
+                start=i+1;
+                tank=0;
+            }
+            
+            
+            
+            
         }
-        else 
-            return false;
+        
+        return totalGas<totalCost ? -1 : start;
+        
+        
+        
         
         
         
     }
-    
-    
-    
-    
 }
