@@ -15,11 +15,14 @@ class Solution {
     }
     public int getKth(int lo, int hi, int k) {
         Map<Integer,Integer> cache=new HashMap();
-        TreeSet<Node> pq=new TreeSet<>(((Node a,Node b)->(Integer.compare(a.powerVal,b.powerVal)==0 ? Integer.compare(a.val,b.val): Integer.compare(a.powerVal,b.powerVal))));
+        // TreeSet<Integer> pq=new TreeSet<>(((Node a,Node b)->(Integer.compare(a.powerVal,b.powerVal)==0 ? Integer.compare(a.val,b.val): Integer.compare(a.powerVal,b.powerVal))));
+        TreeSet<Integer> pq=new TreeSet<>(((Integer a,Integer b)->(Integer.compare(getPowerValue(a,cache),getPowerValue(b,cache))==0 ? Integer.compare(a,b): Integer.compare(getPowerValue(a,cache),getPowerValue(b,cache)))));
+        
         
         for(int i=lo;i<=hi;i++){
             
-            pq.add(new Node(i,getPowerValue(i,cache)));
+            // pq.add(new Node(i,getPowerValue(i,cache)));
+            pq.add(i);
             
         }
         // System.out.println(pq);
@@ -32,7 +35,7 @@ class Solution {
         // }
         
         
-        return pq.toArray(new Node[0])[k-1].val;
+        return pq.toArray(new Integer[0])[k-1];
         
         // return -1;
         
