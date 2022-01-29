@@ -15,7 +15,7 @@ class Solution {
     }
     public int getKth(int lo, int hi, int k) {
         Map<Integer,Integer> cache=new HashMap();
-        PriorityQueue<Node> pq=new PriorityQueue<>(((Node a,Node b)->(Integer.compare(a.powerVal,b.powerVal)==0 ? Integer.compare(a.val,b.val): Integer.compare(a.powerVal,b.powerVal))));
+        TreeSet<Node> pq=new TreeSet<>(((Node a,Node b)->(Integer.compare(a.powerVal,b.powerVal)==0 ? Integer.compare(a.val,b.val): Integer.compare(a.powerVal,b.powerVal))));
         
         for(int i=lo;i<=hi;i++){
             
@@ -23,15 +23,18 @@ class Solution {
             
         }
         // System.out.println(pq);
-        int count=0;
-        while(count<k){
-            Node node=pq.remove();
-            if(k-1==count)
-                return node.val;
-            count++;
-        }
+        // int count=0;
+        // while(count<k){
+        //     Node node=pq.remove();
+        //     if(k-1==count)
+        //         return node.val;
+        //     count++;
+        // }
         
-        return -1;
+        
+        return pq.toArray(new Node[0])[k-1].val;
+        
+        // return -1;
         
     }
     
