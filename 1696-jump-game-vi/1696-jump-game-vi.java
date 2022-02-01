@@ -17,7 +17,7 @@ class Solution {
                 
             }
             
-            dq.add(i);
+            dq.addLast(i);
             
             if(i-dq.peekFirst() >= k)
                 dq.remove();
