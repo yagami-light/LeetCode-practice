@@ -1,56 +1,69 @@
 class Solution {
     public boolean canJump(int[] nums) {
         
-  
-        return canJumpWrap2(nums);
         
-        
-    }
-    
-    
-    private boolean canJumpWrap2(int[] nums){
-        
-        int lastGoodPos=nums.length-1;
-        
-        for(int i=nums.length-1;i>=0;i--){
-            
-            if(i+nums[i] >= lastGoodPos)
-                lastGoodPos=i;
-            
-        }
-        
-        return lastGoodPos == 0;
+       return canJumUtil(nums);
         
     }
     
-    
-    private boolean canJumpWrap(int[] nums){
-        Map<Integer,Boolean> cache=new HashMap();
-        return canJumpUtil(nums,0,cache);
-    }
-    
-    
-    
-    private boolean canJumpUtil(int[] nums,int index,Map<Integer,Boolean> cache){
+    private boolean canJumpUtil(int[] nums, int index){
         
-        if(index>=nums.length-1)
+        int n=nums.length;
+        if(index>=n-1)
             return true;
+        boolean  canJump=false;
         
-        boolean canJump=false;
-        if(cache.get(index)!=null)
-            return cache.get(index);
-        
-        for(int i=index+1;i<=(index+nums[index]);i++){
+        int range=index+nums[index];
+        for(int i=index+1;i<=range;i++){
             
-            canJump  =canJump | canJumpUtil(nums,i,cache);
+            canJump |= canJumpUtil(nums,i);
+            
             
         }
         
-        cache.put(index,canJump);
-        return cache.get(index);
+        
+        return canJump;
         
         
         
     }
+    
+    
+    private boolean canJumUtil(int[] nums){
+        int n=nums.length;
+       
+        int lastGoodPosition=n-1;
+        
+        for(int i=n-1;i>=0;i--){
+            
+            if(i+nums[i]>=lastGoodPosition)
+                
+                lastGoodPosition=i;
+            
+        }
+        
+        return lastGoodPosition==0;
+        
+        
+        
+    }
+    
+    
+    
+    
+    
     
 }
+
+
+/*
+
+[2,3,1,1,4]
+
+
+
+
+
+
+
+*/
