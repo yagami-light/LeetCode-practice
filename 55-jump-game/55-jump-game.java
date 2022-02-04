@@ -2,7 +2,7 @@ class Solution {
     public boolean canJump(int[] nums) {
         
         
-       return canJumUtil(nums);
+       return canJumpUtil2(nums);
         
     }
     
@@ -47,6 +47,29 @@ class Solution {
         
         
     }
+    
+    private boolean canJumpUtil2(int[] nums){
+        
+        int n=nums.length;
+        
+        int lastGoodPos=0;
+        
+        for(int i=0;i<n;i++){
+              
+            if(lastGoodPos>=i)
+            lastGoodPos=Math.max(lastGoodPos,i+nums[i]);
+            
+        }
+      
+        System.out.println(lastGoodPos);
+        
+        return lastGoodPos >=n-1;
+        
+        
+        
+        
+    }
+    
     
     
     
