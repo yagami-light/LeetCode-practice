@@ -1,12 +1,11 @@
 class Solution {
     public int uniquePaths(int m, int n) {
-        int[] count=new int[1];
         Map<Pair<Integer,Integer>,Integer> cache=new HashMap();
-        return uniquePathsUtil(m,n,0,0,count,cache);
+        return unqieuePath(m,n,0,0,cache);
     }
     
     
-    private int uniquePathsUtil(int m, int n,int i,int j,int[] count,Map<Pair<Integer,Integer>,Integer> cache){
+    private int unqieuePath(int m,int n,int i,int j,Map<Pair<Integer,Integer>,Integer> cache){
         
         if(i==m-1 && j==n-1)
             return 1;
@@ -16,15 +15,16 @@ class Solution {
         if(cache.get(new Pair(i,j))!=null)
             return cache.get(new Pair(i,j));
         
-        count[0]=uniquePathsUtil(m,n,i+1,j,count,cache)+uniquePathsUtil(m,n,i,j+1,count,cache);
         
-        cache.put(new Pair(i,j), count[0]);
+        int count=unqieuePath(m,n,i+1,j,cache)+unqieuePath(m,n,i,j+1,cache);
         
-        return cache.get(new Pair(i,j));
+        cache.put(new Pair(i,j),count);
+        return count;
         
         
         
     }
+    
     
     
 }
