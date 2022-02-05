@@ -1,34 +1,27 @@
 class MedianFinder {
-    
-    PriorityQueue<Integer> max=new PriorityQueue<>(Collections.reverseOrder());
-    PriorityQueue<Integer> min=new PriorityQueue<>();
-    boolean isEven=true;
-    
 
+    PriorityQueue<Integer> max;
+    PriorityQueue<Integer> min;
+    
+    
     public MedianFinder() {
+        
+        max=new PriorityQueue<>(Collections.reverseOrder());
+        min=new PriorityQueue<>();
+        
         
     }
     
     public void addNum(int num) {
-        if(isEven){
+        max.add(num);
+        min.add(max.remove());
+        
+        if(max.size() < min.size()){
             
-            max.add(num);
-            min.add(max.remove());
-            isEven=!isEven;
-            
-            
-        }
-        else{
-            min.add(num);
             max.add(min.remove());
             
-            isEven=!isEven;
-            
-            
             
         }
-        
-        
         
         
         
@@ -36,13 +29,13 @@ class MedianFinder {
     
     public double findMedian() {
         
-        if(isEven){
+        if(max.size() == min.size()){
+            return (double)(max.peek()+min.peek())/2;
+        }else
             
-            return (double)(max.peek() + min.peek())/2;
-        }
-        else
-            
-            return min.peek();
+            return max.peek();
+        
+        
         
     }
 }
@@ -53,12 +46,3 @@ class MedianFinder {
  * obj.addNum(num);
  * double param_2 = obj.findMedian();
  */
-
-
-/*
-
-        min
-max   3
-2
-1
-*/
