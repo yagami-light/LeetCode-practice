@@ -1,11 +1,11 @@
 class Trie {
-
-    TrieNode roott;
     
+    TrieNode root;
+
     class TrieNode{
         
-        TrieNode[] children=new TrieNode[26];
-        boolean isEnd;
+        TrieNode[] children=new TrieNode[256];
+        boolean isWord;
         
         
     }
@@ -13,68 +13,72 @@ class Trie {
     
     public Trie() {
         
-        roott=new TrieNode();
-        
+        root=new TrieNode();
         
     }
     
     public void insert(String word) {
-        int len=word.length();
-        TrieNode root=roott;
-        for(int level=0;level<len;level++){
+        int length=word.length();
+        TrieNode node=root;
+        
+        for(int level=0;level<word.length();level++){
             
             int index=word.charAt(level)-'a';
-            if(root.children[index]==null){
+            if(node.children[index]==null){
                 
-                root.children[index]=new TrieNode();
+                node.children[index]=new TrieNode();
                 
             }
-            
-            root=root.children[index];
-            
+            node=node.children[index];
             
             
             
         }
         
-        root.isEnd=true;
+        node.isWord=true;
+        
         
         
     }
     
     public boolean search(String word) {
-        int len=word.length();
-          TrieNode root=roott;
-        for(int level=0;level<len;level++){
+          TrieNode node=root;
+        
+        for(int level=0;level<word.length();level++){
             
             int index=word.charAt(level)-'a';
-            if(root.children[index]!=null){
-                root=root.children[index];
+            if(node.children[index]==null){
                 
-            }else
-                return false;
+            return false;
+                
+            }
+            node=node.children[index];
+            
+            
             
         }
-        
-        
-        return root.isEnd;
-        
-        
+        return node.isWord;
     }
     
-    public boolean startsWith(String prefix) {
-        int len=prefix.length();
-        TrieNode root=roott;
-        for(int level=0;level<len;level++){
-            int index=prefix.charAt(level)-'a';
-            if(root.children[index]==null)
-                return false;
-            else
-                root=root.children[index];
+    public boolean startsWith(String word) {
+          TrieNode node=root;
+        
+        for(int level=0;level<word.length();level++){
+            
+            int index=word.charAt(level)-'a';
+            if(node.children[index]==null){
+                
+            return false;
+                
+            }
+            node=node.children[index];
+            
+            
+            
         }
-        
-        
         return true;
+        
+        
     }
 }
 
