@@ -1,35 +1,44 @@
 class Solution {
     public double[] medianSlidingWindow(int[] nums, int k) {
         
-        PriorityQueue<Integer> min=new PriorityQueue();
-        PriorityQueue<Integer> max=new PriorityQueue(Collections.reverseOrder());
-        int resultSize=nums.length-k+1;
-        double[] result=new double[resultSize];
-        int j=0;
-        for(int i=0;i<nums.length;i++){
+        PriorityQueue<Integer> large=new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> small=new PriorityQueue<>();
+        double[] res=new double[nums.length-k+1];
+        int count=0;
+        
+        for(int i=0,j=0;i<nums.length;i++){
             
-            min.add(nums[i]);
-            max.add(min.poll());
-            if(min.size()<max.size()) min.add(max.poll());
+            small.add(nums[i]);
+            large.add(small.remove());
             
-            if(min.size()+max.size() == k){
+            if(small.size() < large.size()){
+                
+                small.add(large.remove());
+                // small.remove();
                 
                 
-                result[j]= min.size()==max.size() ? (double)((long) min.peek()+(long)max.peek())/2 : (double) min.peek();
-                if(!min.remove(nums[j]))
-                    max.remove(nums[j]);
-                
-                j++;
             }
+            
+            
+            if(small.size()+large.size()==k){
+                if(small.size() ==large.size())
+                    res[count++]=(double)((long)small.peek()+(long)large.peek())/2;
+                else
+                    res[count++]=(double)(small.peek());
+                if(!small.remove(nums[j]))
+                large.remove(nums[j]);
+                j++;
+                
+            }
+            
+            
             
             
         }
         
+        return res;
         
-        return result;
+        
         
     }
-    
-    
-    
 }
