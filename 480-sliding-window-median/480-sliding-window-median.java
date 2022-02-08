@@ -3,25 +3,20 @@ class Solution {
         
         PriorityQueue<Integer> large=new PriorityQueue<>(Collections.reverseOrder());
         PriorityQueue<Integer> small=new PriorityQueue<>();
+        int j=0;
         double[] res=new double[nums.length-k+1];
         int count=0;
         
-        for(int i=0,j=0;i<nums.length;i++){
+        for(int n:nums){
             
-            small.add(nums[i]);
+            small.add(n);
             large.add(small.remove());
-            
-            if(small.size() < large.size()){
-                
+            if(large.size() > small.size())
                 small.add(large.remove());
-                // small.remove();
-                
-                
-            }
             
-            
-            if(small.size()+large.size()==k){
-                if(small.size() ==large.size())
+            if(small.size() + large.size() == k){
+                
+               if(small.size() ==large.size())
                     res[count++]=(double)((long)small.peek()+(long)large.peek())/2;
                 else
                     res[count++]=(double)(small.peek());
@@ -30,7 +25,6 @@ class Solution {
                 j++;
                 
             }
-            
             
             
             
