@@ -1,24 +1,24 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
         
-        Map<Integer,Integer> map=new HashMap();
+        int xor=0;
         
         for(int n:nums)
-            map.merge(n,1,Integer::sum);
+            xor ^= n;
         
+        
+        int bitSetNumber= xor & -xor;
         int[] res=new int[2];
-        int count=0;
-        for(int n:map.keySet()){
+        for(int n:nums){
             
-            if(map.get(n)==1)
-                res[count++]=n;
+            if((bitSetNumber & n) ==0){
+                res[0] ^= n;
+            }else
+                res[1] ^=n;
             
         }
         
         return res;
         
-        
     }
 }
-
-
