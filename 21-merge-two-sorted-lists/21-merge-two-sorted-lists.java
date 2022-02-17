@@ -9,40 +9,29 @@
  * }
  */
 class Solution {
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        
-        return mergeTwoListsUtil(l1,l2);
-    }
-    
-    private ListNode mergeTwoListsUtil(ListNode l1,ListNode l2){
-        if(l1==null && l2==null)
-            return null;
-        
-        if(l1==null && l2!=null)
-            return l2;
-        
-        if(l1!=null && l2==null)
-            return l1;
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1==null)
+            return list2;
+        if(list2==null)
+            return list1;
         
         
-        if(l1.val<l2.val)
-        {
-            ListNode node=new ListNode(l1.val);
-            node.next=mergeTwoListsUtil(l1.next,l2);
-            return node;
-            
-            
+        ListNode dummyNode=new ListNode();
+        ListNode newHead=dummyNode;
+        if(list1.val < list2.val){
+            ListNode newNode=new ListNode(list1.val);
+            dummyNode.next=newNode;
+            dummyNode=dummyNode.next;
+            dummyNode.next=mergeTwoLists(list1.next,list2);
+        }else{
+             ListNode newNode=new ListNode(list2.val);
+            dummyNode.next=newNode;
+            dummyNode=dummyNode.next;
+             dummyNode.next=mergeTwoLists(list2.next,list1);
         }
-        else{
-            
-             ListNode node=new ListNode(l2.val);
-            node.next=mergeTwoListsUtil(l1,l2.next);
-            return node;
-            
-            
-        }
+        
+        return newHead.next;
         
         
     }
-    
 }
