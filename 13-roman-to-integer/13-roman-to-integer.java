@@ -13,33 +13,19 @@ class Solution {
         
         int len=s.length();
         
-        for(int i=0;i<len;i++){
+        for(int i=0;i<len-1;i++){
             
-            char currDigit=s.charAt(i);
-            int currValue=map.get(currDigit);
-            
-            if((currDigit=='I'|| currDigit=='X' || currDigit=='C' ) && i<len-1 ){
-                
-                char nextDigit=s.charAt(i+1);
-                if((currDigit=='I' && (nextDigit=='V' || nextDigit=='X')) ||
-                   (currDigit=='X' && (nextDigit=='L' || nextDigit=='C')) ||
-                   (currDigit=='C' && (nextDigit=='D' || nextDigit=='M')) ){
-                int nextValue=map.get(nextDigit);
-                currValue=nextValue-currValue;
-                i+=1;    
-                }
-                
-                
-            }
-            
-            sum+=currValue;
-            
-            
+           if(map.get(s.charAt(i)) < map.get(s.charAt(i+1))){
+               sum-=map.get(s.charAt(i));
+           }else
+               sum+=map.get(s.charAt(i));
             
             
             
             
         }
+        
+        sum+=map.get(s.charAt(s.length()-1));
         
         
         return sum;
