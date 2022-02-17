@@ -1,40 +1,48 @@
 class MinStack {
 
     Stack<Integer> st;
-    Deque<Integer> deq;    
+    int min=Integer.MAX_VALUE;
+    
     public MinStack() {
-        st=new Stack<>();
-        deq=new LinkedList();
         
+        st=new Stack();
         
     }
     
     public void push(int val) {
+        if(val<=min){
+            
+            st.push(min);
+            min=val;
+            
+            
+        }
         
         st.push(val);
-        if(deq.isEmpty())
-            deq.addFirst(val);
-        else if(!deq.isEmpty()&& deq.peek()>=val)
-            deq.addFirst(val);
         
     }
     
     public void pop() {
-       int poppedValue= st.pop();
-       if(deq.peekFirst()==poppedValue)
-           deq.pop();
+        
+        int val=st.pop();
+        if(val==min){
+            
+            min=st.pop();
+            
+        }
+        
+        
         
     }
     
     public int top() {
         
-        return   st.peek();
+        return st.peek();
     }
     
     public int getMin() {
         
-        return deq.peekFirst();
-        
+        return min;
     }
 }
 
