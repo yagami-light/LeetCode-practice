@@ -19,7 +19,7 @@ class Solution {
             
         }
         
-        return Math.max(dp[n-1],dp[n-2]);
+        return dp[n-1];
         
         
     }
