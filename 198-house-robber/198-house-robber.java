@@ -1,27 +1,26 @@
 class Solution {
     public int rob(int[] nums) {
-        int[] cache=new int[nums.length];
-        Arrays.fill(cache,-1);
-        return robUtil(nums,0,cache);
+        int n=nums.length;
+        int[] dp=new int[n];
+        if(n==1) return nums[0];
+        if(n==2) return Math.max(nums[0],nums[1]);
+        for(int i=0;i<n;i++){
+            if(i==0){
+                dp[i]=nums[i];
+                
+            }
+           else  if(i==1){
+                dp[i]=Math.max(nums[0],nums[1]);
+            }
+            else
+            dp[i]=Math.max(dp[i-2]+nums[i],dp[i-1]);
+            
+            System.out.println("print array "+Arrays.toString(dp));
+            
+        }
+        
+        return Math.max(dp[n-1],dp[n-2]);
+        
+        
     }
-    
-    
-    private int robUtil(int[] nums, int index,int[] cache){
-        if(index>=nums.length)
-            return 0;
-        
-        if(cache[index]!=-1)
-            return cache[index];
-        
-        int skipCurrent=robUtil(nums,index+1,cache);
-        int takeCurrent=nums[index]+robUtil(nums,index+2,cache);
-        
-        int maxAmount=Math.max(skipCurrent,takeCurrent);
-        cache[index]=maxAmount;
-        return maxAmount;
-        
-        
-    }
-    
-    
 }
