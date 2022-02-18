@@ -1,17 +1,18 @@
 class Solution {
     public boolean isHappy(int n) {
         int count=0;
-        while(true){
-            
-            n=sumOfDigitSquare(n);
-            if(n==1)
-                return true;
-            if(count>10000)
-                return false;
-            count++;
-            
-        }
-       
+        int fast=n;
+        int slow=n;
+        
+       do{
+            fast=sumOfDigitSquare(sumOfDigitSquare(fast));
+           // fast=sumOfDigitSquare(fast);
+            slow=sumOfDigitSquare(slow);
+        } while(slow!=fast);
+        
+        if(slow==1)
+            return true;
+        else return false;
         
         
         
