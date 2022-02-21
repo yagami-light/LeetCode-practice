@@ -1,36 +1,36 @@
 class KthLargest {
-    
-    
-    PriorityQueue<Integer> pq;
-    int size;
 
+    PriorityQueue<Integer> pq;
+    int k;
+    
     public KthLargest(int k, int[] nums) {
-        
-        pq=new PriorityQueue<>(k);
-        size=k;
-        for(int c:nums){
-            pq.add(c);
-            if(pq.size()>size)
+        this.k=k;
+        pq=new PriorityQueue<>();
+        for(int n: nums){
+            pq.add(n);
+            if(pq.size()>k)
                 pq.remove();
-            
             
         }
         
-        
-        
+        System.out.println(pq);
         
     }
     
     public int add(int val) {
-        
+                // System.out.println("insert"+pq);
+
         pq.add(val);
-        if(pq.size()>size)
+                        // System.out.println("inserted "+pq);
+                // System.out.println("inserted size"+pq.size());
+        // System.out.println("k value "+k);
+
+        if(pq.size() > k)
             pq.remove();
         
+        System.out.println(val);
         
-        return pq.peek();
-        
-        
+        return pq.isEmpty() ? -1 : pq.peek();
         
     }
 }
@@ -42,17 +42,13 @@ class KthLargest {
  */
 
 
-
 /*
 
-2,4,2,3,3,5,6,3
-----
 
-2,2,3,3,3,4,5,6
-
-
-3 largeest element
-
+1
+2
+3
+4
 
 
 
