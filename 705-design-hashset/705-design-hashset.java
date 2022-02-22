@@ -3,7 +3,7 @@ class MyHashSet {
     List<Integer>[] container=null;
     int cap=1000000;
     int count=0;
-    
+    double loadfactor=0.75;
     public MyHashSet() {
         container=new LinkedList[cap];
         
@@ -13,7 +13,20 @@ class MyHashSet {
         if(contains(key))
             return;
         
-        
+        if(count == loadfactor*cap){
+            count=0;
+            cap *=2;
+            List<Integer>[] oldc=container;
+            container=new LinkedList[cap];
+            for(int i=0;i<oldc.length;i++){
+                List<Integer> list=oldc[i];
+                if(list!=null){
+                    for(int entry: list){
+                        this.add(entry);
+                    }
+                }
+            }
+        }
         
         
         int hash=key%cap;
