@@ -2,6 +2,7 @@ class MyHashSet {
 
     List<Integer>[] container;
     int cap=1000000;
+    double load=0.75;
     
     int count=0;
     public MyHashSet() {
@@ -14,6 +15,26 @@ class MyHashSet {
         int hash=key % cap;
         if(this.contains(key))
             return;
+        
+        if(load*count == cap){
+            
+            List<Integer>[] oldc=container;
+            cap *= 2;
+            container=new LinkedList[cap];
+            
+            for(int i=0;i<oldc.length;i++){
+                
+                List<Integer> list=oldc[i];
+                if(list!=null){
+                    for(int n:list){
+                        this.add(n);
+                    }
+                }
+            }
+            
+            
+            
+        }
         
         
         List<Integer> list=container[hash];
