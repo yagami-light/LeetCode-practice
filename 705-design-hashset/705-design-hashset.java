@@ -1,28 +1,21 @@
 class MyHashSet {
-
-    HashMap<Integer,Object> map;
-    private  final Object CONST=new Object();
     
+    boolean[] set;
+
     public MyHashSet() {
-        map=new HashMap();
+        set=new boolean[1000000+1];
     }
     
     public void add(int key) {
-       // if(!map.containsKey(key))
-        map.put(key,CONST);
-        
-        
-        
+        set[key]=true;
     }
     
     public void remove(int key) {
-        map.remove(key);
+        set[key]=false;
     }
     
     public boolean contains(int key) {
-        
-       return  map.containsKey(key);
-        
+        return set[key];
     }
 }
 
