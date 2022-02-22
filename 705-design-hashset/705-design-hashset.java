@@ -1,7 +1,7 @@
 class MyHashSet {
 
     List<Integer>[] container;
-    int cap=1000000;
+    int cap=10000;
     double load=0.75;
     
     int count=0;
