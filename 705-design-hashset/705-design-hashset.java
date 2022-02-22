@@ -1,45 +1,36 @@
 class MyHashSet {
 
-    List<Integer>[] container=null;
+    List<Integer>[] container;
     int cap=1000000;
+    
     int count=0;
-    double loadfactor=0.75;
     public MyHashSet() {
+        
         container=new LinkedList[cap];
         
     }
     
     public void add(int key) {
-        if(contains(key))
+        int hash=key % cap;
+        if(this.contains(key))
             return;
         
-        if(count == loadfactor*cap){
-            count=0;
-            cap *=2;
-            List<Integer>[] oldc=container;
-            container=new LinkedList[cap];
-            for(int i=0;i<oldc.length;i++){
-                List<Integer> list=oldc[i];
-                if(list!=null){
-                    for(int entry: list){
-                        this.add(entry);
-                    }
-                }
-            }
-        }
         
-        
-        int hash=key%cap;
-        if(container[hash]==null){
-            container[hash]=new LinkedList();
+        List<Integer> list=container[hash];
+        if(list==null){
+        container[hash]=new LinkedList();
         }
-        container[hash].add(key);
-        count++;
+            container[hash].add(key);
+            count++;
+        
         
     }
     
     public void remove(int key) {
-        int hash=key%cap;
+        int hash = key % cap;
+        if(!this.contains(key))
+            return;
+        
         List<Integer> list=container[hash];
         if(list!=null){
             Iterator<Integer> iter=list.iterator();
@@ -48,31 +39,26 @@ class MyHashSet {
                     iter.remove();
                     count--;
                     break;
-                    
                 }
-                
             }
         }
-       
-        
-        
     }
     
     public boolean contains(int key) {
-        
         int hash=key % cap;
         List<Integer> list=container[hash];
         if(list!=null){
-            Iterator<Integer> iter=list.iterator();
+        Iterator<Integer> iter=list.iterator();
             while(iter.hasNext()){
-                if(iter.next()==key) return true;
+                if(iter.next() == key)
+                    return true;
             }
+            
         }
-        return false;
+        
+            return false;
+        
     }
-    
-    
-    
 }
 
 /**
