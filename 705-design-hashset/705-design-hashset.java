@@ -1,22 +1,65 @@
 class MyHashSet {
-    
-    boolean[] set;
 
+    List<Integer>[] container=null;
+    int cap=1000000;
+    int count=0;
+    
     public MyHashSet() {
-        set=new boolean[1000000+1];
+        container=new LinkedList[cap];
+        
     }
     
     public void add(int key) {
-        set[key]=true;
+        if(contains(key))
+            return;
+        
+        
+        
+        
+        int hash=key%cap;
+        if(container[hash]==null){
+            container[hash]=new LinkedList();
+        }
+        container[hash].add(key);
+        count++;
+        
     }
     
     public void remove(int key) {
-        set[key]=false;
+        int hash=key%cap;
+        List<Integer> list=container[hash];
+        if(list!=null){
+            Iterator<Integer> iter=list.iterator();
+            while(iter.hasNext()){
+                if(iter.next()==key){
+                    iter.remove();
+                    count--;
+                    break;
+                    
+                }
+                
+            }
+        }
+       
+        
+        
     }
     
     public boolean contains(int key) {
-        return set[key];
+        
+        int hash=key % cap;
+        List<Integer> list=container[hash];
+        if(list!=null){
+            Iterator<Integer> iter=list.iterator();
+            while(iter.hasNext()){
+                if(iter.next()==key) return true;
+            }
+        }
+        return false;
     }
+    
+    
+    
 }
 
 /**
