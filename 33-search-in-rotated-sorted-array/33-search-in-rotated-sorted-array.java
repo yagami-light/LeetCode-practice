@@ -7,11 +7,9 @@ class Solution {
         if(nums[pivot]==target)
             return pivot;
         int leftHalf=searchBinUtil(nums,0,nums.length-1,target,pivot);
-        if(leftHalf!=-1)
+       
             return leftHalf;
-            else
-                return searchBinUtil(nums,pivot,nums.length-1,target,pivot);
-        
+         
         
         // return -1;
     }
