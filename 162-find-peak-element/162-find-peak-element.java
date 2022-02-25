@@ -18,7 +18,7 @@ class Solution {
         if(0<mid && mid<nums.length-1 && nums[mid-1]<nums[mid] && nums[mid]>nums[mid+1]|| (mid==0 && mid<nums.length-1 && nums[mid]>nums[mid+1] ) || (mid>0 && mid==nums.length-1 && nums[mid]>nums[mid-1] ))
             return mid;
         
-        else if(mid==0 || nums[mid-1]<nums[mid]){
+        else if( nums[mid+1]>nums[mid]){
             
                 return findPeakBin(nums,mid+1,end);
             
