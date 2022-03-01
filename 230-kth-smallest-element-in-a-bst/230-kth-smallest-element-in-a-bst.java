@@ -15,42 +15,30 @@
  */
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
-        // PriorityQueue<TreeNode> pq=new PriorityQueue<>(Comparator.comparingInt(node->node.val).reverseOrder());
+        int[] res=new int[2];
+        inorder(root,k,0,res);
         
-         PriorityQueue<Integer> pq=new PriorityQueue<>(k,Collections.reverseOrder());
+        return res[0];
         
-        inOrder(root,pq,k);
-        return pq.peek();
+        
+        
     }
     
-    private void inOrder(TreeNode root,PriorityQueue<Integer> pq,int k){
+    private void inorder(TreeNode root,int k,int count,int[] res){
         if(root==null)
             return;
         
-        inOrder(root.left,pq,k);
+        inorder(root.left,k,count,res);
         
-        pq.add(root.val);
-        if(pq.size()>k)
-            pq.remove();
+             res[1]++;
+        // System.out.println("root value "+root.val+" count "+res[1]);
+        if(res[1]==k)
+            res[0]=root.val;
+   
+        inorder(root.right,k,count,res);
         
-        inOrder(root.right,pq,k);
         
         
     }
     
-    
 }
-
-
-/*
-1,2,3,4,5,6
-
-
-
-
-
-4
-3
-2
-
-*/
