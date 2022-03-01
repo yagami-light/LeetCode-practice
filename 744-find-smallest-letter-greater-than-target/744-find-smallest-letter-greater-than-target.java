@@ -8,8 +8,8 @@ class Solution {
     }
     
     private char nextGreatLet(char[] let,char target, int start,int end){
-        if(start>end)
-            return let[start];
+        if(start>=end)
+            return let[end];
             
         
         int mid=(start+end)/2;
@@ -17,7 +17,7 @@ class Solution {
         if(let[mid]<=target){
             return nextGreatLet(let,target,mid+1,end);
         }else
-            return nextGreatLet(let,target,start,mid-1);
+            return nextGreatLet(let,target,start,mid);
         
         
         
