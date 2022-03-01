@@ -9,7 +9,7 @@ class Solution {
             
             int mid=(start+end)/2;
             
-            if(x-arr[mid]>arr[mid+k]-x)
+            if(x > (arr[mid]+(arr[mid+k]-arr[mid])/2))
                 start=mid+1;
                 
                 
