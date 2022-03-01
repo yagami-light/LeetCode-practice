@@ -1,10 +1,10 @@
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
         int start=0;
-        int end=arr.length-k;
+        int end=arr.length-k-1;
         
         
-        while(start<end){
+        while(start<=end){
             
             
             int mid=(start+end)/2;
@@ -16,7 +16,7 @@ class Solution {
                 // --------------------------mid--x---midd-----mid+k-----------
                 
             else
-                end=mid;
+                end=mid-1;
             
             
         }
