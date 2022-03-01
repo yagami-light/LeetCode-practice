@@ -14,36 +14,43 @@
  * }
  */
 class Solution {
-    Integer count=0;
     public int kthSmallest(TreeNode root, int k) {
+        // PriorityQueue<TreeNode> pq=new PriorityQueue<>(Comparator.comparingInt(node->node.val).reverseOrder());
         
-        return kthSmallestUtil(root,k);
+         PriorityQueue<Integer> pq=new PriorityQueue<>(k,Collections.reverseOrder());
+        
+        inOrder(root,pq,k);
+        return pq.peek();
     }
     
-    private int kthSmallestUtil(TreeNode root,int k){
+    private void inOrder(TreeNode root,PriorityQueue<Integer> pq,int k){
         if(root==null)
-            return -1;
+            return;
         
-        int left=kthSmallestUtil(root.left,k);
-        if(left!=-1)
-            return left;
+        inOrder(root.left,pq,k);
         
-       
-        count++;
-         if(count==k)
-            return root.val;
+        pq.add(root.val);
+        if(pq.size()>k)
+            pq.remove();
         
-        int right=kthSmallestUtil(root.right,k);
-        if(right!=-1)
-            
-            return right;
-        
-        
-        return -1;
+        inOrder(root.right,pq,k);
         
         
     }
-    
     
     
 }
+
+
+/*
+1,2,3,4,5,6
+
+
+
+
+
+4
+3
+2
+
+*/
