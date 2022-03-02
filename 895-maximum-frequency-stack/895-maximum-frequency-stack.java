@@ -1,43 +1,41 @@
 class FreqStack {
     
-    class Node{
-        int val;
-        int freq;
-        int tick;
-        
-        Node(int val,int freq,int tick){
-            this.val=val;
-            this.freq=freq;
-            this.tick=tick;
-        }
-        
-    }
-    
-    int tick=0;
+    List<Stack<Integer>> bucket;
     Map<Integer,Integer> map;
-    PriorityQueue<Node> pq;
 
     public FreqStack() {
-        
+        bucket=new ArrayList();
         map=new HashMap();
-        pq=new PriorityQueue<>((a,b)->(Integer.compare(b.freq,a.freq)!=0 ? Integer.compare(b.freq,a.freq) :
-                              Integer.compare(b.tick,a.tick)));
-        
         
     }
     
     public void push(int val) {
         
         map.put(val,map.getOrDefault(val,0)+1);
-        Node node=new Node(val,map.get(val),tick++);
-        pq.add(node);
+        int freq=map.get(val);
+        if(freq-1 >= bucket.size())
+            // if(bucket.get(freq-1)==null)
+            bucket.add(new Stack<Integer>());
+        
+        bucket.get(freq-1).add(val);
+        
+        
         
         
     }
     
     public int pop() {
-         map.put(pq.peek().val, map.get(pq.peek().val) - 1);
-        return pq.remove().val;
+        
+        int freq=bucket.size();
+        int val=bucket.get(freq-1).pop();
+        if(bucket.get(freq-1).isEmpty())
+            bucket.remove(freq-1);
+        // bucket.get(freq-1).
+        
+        
+        
+        map.put(val,map.get(val)-1);
+        return  val;
         
     }
 }
