@@ -2,6 +2,8 @@ class FreqStack {
     
     List<Stack<Integer>> bucket;
     Map<Integer,Integer> map;
+    
+    
 
     public FreqStack() {
         bucket=new ArrayList();
@@ -10,14 +12,15 @@ class FreqStack {
     }
     
     public void push(int val) {
-        
         map.put(val,map.getOrDefault(val,0)+1);
         int freq=map.get(val);
-        if(freq-1 >= bucket.size())
-            // if(bucket.get(freq-1)==null)
-            bucket.add(new Stack<Integer>());
         
+        if(freq-1 >=bucket.size()){
+            bucket.add(new Stack());
+        }
         bucket.get(freq-1).add(val);
+        
+        
         
         
         
@@ -27,15 +30,15 @@ class FreqStack {
     public int pop() {
         
         int freq=bucket.size();
-        int val=bucket.get(freq-1).pop();
-        if(bucket.get(freq-1).isEmpty())
-            bucket.remove(freq-1);
-        // bucket.get(freq-1).
         
+        int val=bucket.get(freq-1).pop();
+        if(bucket.get(freq-1).isEmpty()) bucket.remove(freq-1);
         
         
         map.put(val,map.get(val)-1);
-        return  val;
+        if(map.get(val)==0)
+            map.remove(val);
+        return val;
         
     }
 }
