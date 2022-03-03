@@ -32,7 +32,7 @@ class Solution {
             if(j==n)
                 return false;
             
-            indegree[j]--;
+            indegree[j]=-1;
             for(int num:graph[j])
                 indegree[num]--;
             
