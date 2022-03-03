@@ -1,52 +1,47 @@
 class Solution {
     public boolean canFinish(int n, int[][] pre) {
         
-        ArrayList<Integer>[] graph=new ArrayList[n];
-        int[] visited=new int[n];
+        int[] indegree=new int[n];
         
- for(int i=0;i<n;i++){
+        ArrayList<Integer>[] graph=new ArrayList[n];
+        
+        for(int i=0;i<n;i++){
             graph[i]=new ArrayList();
         }
-                
-             for(int[] node:pre){
+        
+        for(int i=0;i<pre.length;i++){
             
-            graph[node[0]].add(node[1]);
+            int prec=pre[i][1];
+            int curr=pre[i][0];
+            
+            indegree[prec]++;
+            graph[curr].add(prec);
+            
+            
             
         }
+        
+        
+        
         for(int i=0;i<n;i++){
-            
-            if(isCycle(graph,visited,i))
+            int j=0;
+            for(;j<n;j++){
+                if(indegree[j]==0)
+                    break;
+            }
+            if(j==n)
                 return false;
+            
+            indegree[j]--;
+            for(int num:graph[j])
+                indegree[num]--;
             
             
         }
         return true;
         
         
-    }
-    
-    private boolean isCycle(ArrayList<Integer>[] graph,int[] visited,int index){
-        if(visited[index]==1)
-            return true;
-        
-        visited[index]=1;
-        
-        for(int i: graph[index]){
-            
-            if(visited[i] != 2){
-                
-                if(isCycle(graph,visited,i))
-                    return true;
-                
-            }
-            
-        }
-        visited[index]=2;
-        return false;
-        
         
         
     }
-    
-    
 }
