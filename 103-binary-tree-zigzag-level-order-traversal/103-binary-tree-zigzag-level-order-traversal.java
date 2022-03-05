@@ -15,54 +15,47 @@
  */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-         List<List<Integer>> result=new ArrayList();
-        
-        
-        if(root ==null)
-            return result;
-        boolean zigzag=true;
+        List<List<Integer>> res=new ArrayList();
+        if(root==null)
+            return res;
         Queue<TreeNode> queue=new LinkedList();
+        boolean isEven=false;
         queue.add(root);
         
         while(!queue.isEmpty()){
-            
+            System.out.println(queue.size());
             int size=queue.size();
             List<Integer> list=new ArrayList();
-            
             for(int i=0;i<size;i++){
-                
-                
+                // System.out.println(i);
                 TreeNode node=queue.remove();
-                if(node!=null)
-                {
-                    if(zigzag)
-                        list.add(node.val);
-                else{
-                    // System.out.println("else sizg "+node.val);
+                if(root!=null){
+                    if(!isEven)
+                    list.add(node.val);
+                else
                     list.add(0,node.val);
-                }
                 }
                 if(node.left!=null)
                     queue.add(node.left);
                 if(node.right!=null)
                     queue.add(node.right);
                 
-                
             }
             
-            
-            zigzag=!zigzag;
-            result.add(list);
+            isEven=!isEven;
             
             
-            
+            res.add(list);
             
             
             
         }
         
         
-        return result;
+        return res;
+        
+        
+        
         
     }
 }
