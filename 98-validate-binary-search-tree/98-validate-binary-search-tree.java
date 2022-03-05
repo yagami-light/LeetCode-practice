@@ -14,32 +14,34 @@
  * }
  */
 class Solution {
-    
-     TreeNode prev;
-    
     public boolean isValidBST(TreeNode root) {
-        
-        return isValidBSTUtil(root,null);
-    }
-    
-    private boolean isValidBSTUtil(TreeNode root,TreeNode prevv){
         if(root==null)
             return true;
         
-        if(!isValidBSTUtil(root.left,prev))
-            return false;
+        TreeNode  prev=null;
+        Stack<TreeNode> stack=new Stack();
         
-        if(prev != null && root!=null && root.val <= prev.val)
-            return false;
-       
-        prev=root;
+        while(root!=null || !stack.isEmpty()){
+            
+            
+        while(root!=null){
+            stack.add(root);
+            root=root.left;
+        }
+            
+            root=stack.pop();
+            // list.add(root.val);
+            if(root!=null && prev !=null && root.val<= prev.val)
+                return false;
+            prev=root;
+            root=root.right;
+            
+        }
         
         
-         if(!isValidBSTUtil(root.right,prev))
-            return false;
         
-            return true;
-
+        return true;
+        
+        
     }
-    
 }
