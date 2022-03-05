@@ -15,47 +15,30 @@
  */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res=new ArrayList();
-        if(root==null)
-            return res;
-        Queue<TreeNode> queue=new LinkedList();
-        boolean isEven=false;
-        queue.add(root);
-        
-        while(!queue.isEmpty()){
-            System.out.println(queue.size());
-            int size=queue.size();
-            List<Integer> list=new ArrayList();
-            for(int i=0;i<size;i++){
-                // System.out.println(i);
-                TreeNode node=queue.remove();
-                if(root!=null){
-                    if(!isEven)
-                    list.add(node.val);
-                else
-                    list.add(0,node.val);
-                }
-                if(node.left!=null)
-                    queue.add(node.left);
-                if(node.right!=null)
-                    queue.add(node.right);
-                
-            }
-            
-            isEven=!isEven;
-            
-            
-            res.add(list);
-            
-            
-            
-        }
+     
+        List<List<Integer>> res=new  ArrayList();
         
         
+        dfs(root,res,0);
         return res;
         
+    }
+    
+    private void    dfs(TreeNode root, List<List<Integer>> res,int height){
+        if(root==null)
+            return;
+        if(height>=res.size())
+            res.add(new LinkedList());
         
+        if(height%2==0)
+            res.get(height).add(root.val);
+        else
+            res.get(height).add(0,root.val);
         
+        dfs(root.left,res,height+1);
+        dfs(root.right,res,height+1);
+
         
     }
+    
 }
