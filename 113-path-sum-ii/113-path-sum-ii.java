@@ -30,12 +30,13 @@ class Solution {
             res.add(new ArrayList(currList));
             // return;
         }
-            
+       
         // currList.add(root.val);
         pathSum(root.left,targetSum-root.val,res,currList);
         pathSum(root.right,targetSum-root.val,res,currList);
+        
         currList.remove(currList.size()-1);
+    
+    
     }
-    
-    
 }
