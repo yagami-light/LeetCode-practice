@@ -1,52 +1,47 @@
 class Solution {
-    private static final int[][] DIRECTIONS=new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+    private static int[][] DIRECTIONS=new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+    
     public int numIslands(char[][] grid) {
-        int m =grid.length;
+        int m=grid.length;
         int n=grid[0].length;
-        boolean[][] visisted=new boolean[m][n];
         int count=0;
         for(int i=0;i<m;i++){
             
-            
             for(int j=0;j<n;j++){
                 
-                
-                if(!visisted[i][j] && dfs(grid,i,j,visisted))
+                if(grid[i][j]=='1'){
+                    dfs(grid,i,j);
                     count++;
+                }
+                
                 
             }
-            
         }
         
         return count;
         
+        
     }
     
     
-    
-    private boolean dfs(char[][] grid,int i,int j,boolean[][] visisted){
+    private void dfs(char[][] grid,int i, int j ){
         int m=grid.length;
         int n=grid[0].length;
         
-        if(i<0 || j< 0 || i>= m || j>= n || visisted[i][j]|| grid[i][j]!='1')
-            return false;
-        boolean result=false;
-        visisted[i][j]=true;
+        if(i<0 || j<0 || i>=m || j >=n || grid[i][j]=='0'){
+            return;
+        }
         
-        for(int[] dir:DIRECTIONS){
-            int x=i+dir[0];
-            int y=j+dir[1];
+        grid[i][j]='0';
+       
+        for(int[] dir: DIRECTIONS){
             
-            result|=dfs(grid,x,y,visisted);
-            
+            dfs(grid,i+dir[0],j+dir[1]);
         }
         
         
-        return true|result;
-        
         
     }
-    
     
     
 }
