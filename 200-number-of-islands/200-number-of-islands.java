@@ -10,8 +10,8 @@ class Solution {
             for(int j=0;j<n;j++){
                 
                 if(grid[i][j]=='1'){
-                    dfs(grid,i,j);
-                    count++;
+                    count+=dfs(grid,i,j);
+
                 }
                 
                 
@@ -24,12 +24,12 @@ class Solution {
     }
     
     
-    private void dfs(char[][] grid,int i, int j ){
+    private int dfs(char[][] grid,int i, int j ){
         int m=grid.length;
         int n=grid[0].length;
         
         if(i<0 || j<0 || i>=m || j >=n || grid[i][j]=='0'){
-            return;
+            return 0;
         }
         
         grid[i][j]='0';
@@ -40,7 +40,7 @@ class Solution {
         }
         
         
-        
+        return 1;
     }
     
     
