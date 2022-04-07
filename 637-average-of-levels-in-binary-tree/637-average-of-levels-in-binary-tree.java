@@ -14,38 +14,46 @@
  * }
  */
 class Solution {
+    class Node{
+        double value;
+        double count;
+        
+        Node(double value, double count){
+            this.value=value;
+            this.count=count;
+        }
+        
+    }
     public List<Double> averageOfLevels(TreeNode root) {
+        List<Node> list=new ArrayList();
         List<Double> res=new ArrayList();
+        
+        dfs(root,0,list);
+        System.out.println("size "+list.size());
+        res=list.stream().map(node-> (node.value/node.count)).collect(Collectors.toList());
+        
+        return res;
+    }
+    
+    private void dfs(TreeNode root,int level,List<Node> listOfNode){
         if(root==null)
-            return res;
-        
-        Queue<TreeNode> queue=new LinkedList();
-        queue.add(root);
-        
-        while(!queue.isEmpty()){
-            
-            int size=queue.size();
-            double sum=0;
-            for(int i=0;i<size;i++){
-                
-                TreeNode node=queue.remove();
-                
-                if(node.left!=null)
-                    queue.add(node.left);
-                
-                if(node.right!=null)
-                    queue.add(node.right);
-                sum+=node.val;
-                
-            }
-            
-            res.add(sum/size);
+            return;
+        if(listOfNode.size() <=level){
+            listOfNode.add(new Node(root.val,1));
+        }else
+        {
+            listOfNode.get(level).value+=root.val;
+            // listOfNode.get(level).value+=root.val;
+            listOfNode.get(level).count++;
+
             
             
         }
         
-        return res;
-        
+        dfs(root.left,level+1,listOfNode);
+        dfs(root.right,level+1,listOfNode);
         
     }
+    
+    
 }
