@@ -9,96 +9,59 @@
  */
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        Map<TreeNode,TreeNode> parentMap=new HashMap();
-        
-        parentMap(root,parentMap);
-        System.out.println(parentMap);
-        
-        Queue<TreeNode> queue=new LinkedList();
-        queue.add(target);
-        int count=0;
-        Set<TreeNode> set=new HashSet();
+        Map<TreeNode,Integer> map=new HashMap();
+        find(root,target,map);
+        System.out.println(map);
+        System.out.println(target);
         List<Integer> res=new ArrayList();
-        
-        while(!queue.isEmpty()){
-            int size=queue.size();
-            count++;
-            for(int i=0;i<size;i++){
-                
-                TreeNode node=queue.remove();
-                
-              if(set.contains(node)) {
-                  
-                  System.out.println("continue");     
-                  continue;
-              }
-                if(count-1==k){
-                    res.add(node.val);
-                }
-                    set.add(node);
-
-                
-                  if(parentMap.get(node)!=null && !set.contains(parentMap.get(node)))
-                    queue.add(parentMap.get(node));
-                if(node.left!=null && !set.contains(node.left))
-                    queue.add(node.left);
-                
-                if(node.right!=null && !set.contains(node.right))
-                    queue.add(node.right);
-                    
-                
-                
-                
-            }
-            
-            if(k==count-1)
-                return res;
-            
-        }
-        
+        search(root,target,map,res,0,k);
         return res;
-            
-        
         
     }
     
-    private void parentMap2(TreeNode root,Map<TreeNode,TreeNode> parentMap){
+    private void   search(TreeNode root,TreeNode target,Map<TreeNode,Integer> map, List<Integer> res,int length,int k)
+    {
         if(root==null)
             return;
+        if(map.containsKey(root))
+            length=map.get(root);
         
-        if(root.left!=null)
-            parentMap.put(root.left,root);
+        if(k==length)
+            res.add(root.val);
+        search(root.left,target,map,res,length+1,k);
+        search(root.right,target,map,res,length+1,k);
         
-        if(root.right!=null)
-            parentMap.put(root.right,root);
+    }
+    
+    
+    private int find(TreeNode root,TreeNode target,Map<TreeNode,Integer> map){
         
-        parentMap(root.left,parentMap);
-        parentMap(root.right,parentMap);
+        if(root==null)
+            return -1;
         
+        if(root==target){
+            map.put(root,0);
+            return 0;
+        }
+        
+        int left=find(root.left,target,map);
+         if(left>=0){
+            map.put(root,left+1);
+             return left+1;
+        }
+        int right=find(root.right,target,map);
+        if(right>=0){
+            map.put(root,right+1);
+            return right+1;
+        }
+        
+        
+        return -1;
         
         
     }
     
     
-      private void parentMap(TreeNode root,Map<TreeNode,TreeNode> map){
-            if(root==null)
-                return;
-
-            if(root.left!=null){
-                map.put(root.left,root);
-                parentMap(root.left,map);
-
-        }
-
-            if(root.right!=null){
-                map.put(root.right,root);
-                parentMap(root.right,map);
-
-        }
-
-
-        }
-
     
     
     
