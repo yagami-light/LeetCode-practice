@@ -17,28 +17,30 @@ class Solution {
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if(root==null)
             return false;
+        // int currSum=0;
+        Deque<Pair<TreeNode,Integer>> stack=new LinkedList();
+        stack.add(new Pair(root,root.val));
+        while(!stack.isEmpty()){
+            
+           Pair<TreeNode,Integer> pair=stack.pop();
+           int currSum= pair.getValue();
+            TreeNode node=pair.getKey();
+            
+           if(node.left==null && node.right==null && currSum==targetSum) return true;
+            
+            if(node.left!=null)
+                stack.push(new Pair(node.left,currSum+node.left.val));
+            
+            if(node.right!=null){
+                stack.push(new Pair(node.right,currSum+node.right.val));
+            }
+            
+           
+            
+        }
         
-        
-        return hasPathSumUtil(root,targetSum,0);
+        return false;
         
         
     }
-    
-    private boolean hasPathSumUtil(TreeNode root,int targetSum,int currSum){
-        if(root==null && targetSum <= currSum)
-            return false;
-        
-        
-        if(root==null)
-            return false;
-        
-        if(root.left==null && root.right==null && targetSum == currSum + root.val)
-            return true;
-        
-        
-        return hasPathSumUtil(root.left,targetSum,currSum+root.val) || hasPathSumUtil(root.right,targetSum,currSum+root.val);
-        
-    }
-    
-    
 }
