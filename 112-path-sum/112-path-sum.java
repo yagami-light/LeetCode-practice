@@ -15,43 +15,45 @@
  */
 class Solution {
     public boolean hasPathSum(TreeNode root, int targetSum) {
+        
         Deque<TreeNode> stack=new LinkedList();
-        TreeNode curr=root;
+        
         int currSum=0;
+        TreeNode currNode=root;
         TreeNode prev=null;
-        while(!stack.isEmpty() || curr!=null){
+        while(!stack.isEmpty() || currNode!=null){
             
-            
-            while(curr!=null){
-                 currSum+=curr.val;
-                stack.push(curr);
-                curr=curr.left;
+            while(currNode!=null){
+                
+                stack.push(currNode);
+                currSum+=currNode.val;
+
+                currNode=currNode.left;
             }
             
-                           
-                           
-             curr=stack.peek();
-            // int value=pair.getValue();
-            // TreeNode node=pair.getKey();
-            if(curr.left==null && curr.right==null && currSum==targetSum)
-                           return true;
-                           
-            if(curr.right!=null && curr.right!=prev)               
-            curr=curr.right;               
+            currNode=stack.peek();
+            if(currNode.left==null && currNode.right==null && targetSum==currSum)
+                return true;
+            
+            
+            if(currNode.right!=null && prev!=currNode.right)
+                currNode=currNode.right;
             else{
-                prev=curr;
+                
+                prev=currNode;
+                currSum-=currNode.val;
                 stack.pop();
-                currSum-=curr.val;
-                curr=null;
+                currNode=null;
                 
                 
                 
             }
+            
+            
             
             
         }
         return false;
-        
         
         
     }
