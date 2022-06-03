@@ -1,78 +1,76 @@
 class Solution {
     public void solveSudoku(char[][] board) {
-    
-        if(board==null|| board.length==1)
+        
+        if(board==null || board.length==1)
             return;
         
+        
         helper(board);
-    
-    
-    }
         
-    
-
-
-private boolean isvalid(char[][] b,int row,int col,char c){
-    
-    for(int i=0;i<9;i++){
-        
-        if(b[row][i]!='.' && b[row][i]==c)
-            return false;
-        
-        if(b[i][col]!='.' && b[i][col]==c)
-            return false;
-        
-        if(b[3*(row/3)+i/3][3*(col/3)+i/3]!='.' && b[3*(row/3)+i/3][3*(col/3)+i%3]==c)
-            return false;
         
         
     }
-    return true;
     
-}
-
-    
-    
-    private boolean helper(char[][] b){
+    private boolean  helper(char[][] board){
         
-        for(int i=0;i<b.length;i++){
+        for(int i=0;i<board.length;i++){
             
-            
-            for(int j=0;j<b[0].length;j++){
+            for(int j=0;j<board[0].length;j++){
                 
-                if(b[i][j]=='.'){
-                    
+                if(board[i][j] == '.'){
                     for(char c='1';c<='9';c++){
-                        if(isvalid(b,i,j,c)){
-                            b[i][j]=c;
-                            if(helper(b))
-                                return true;
-                            else
-                                b[i][j]='.';
-                        }
-                        
-                        
-                        
-                    }
-                    return false;
                     
+                    if(isValid(board,i,j,c)){
+                        board[i][j]=c;
+                        if(helper(board))
+                         return true;   
+                        else
+                        board[i][j]='.';
                     
                 }
-                
+                }
+                return false;
                 
                 
             }
-           
             
         }
         
-         return true;
         
         
-        
+    }
+        return true;
+    }
     
     
     
-}
+    
+    
+    private boolean isValid(char[][] board,int row,int col,char c){
+        
+        for(int i=0;i<9;i++){
+            
+            
+            if(board[i][col]!='.' && board[i][col]==c)
+                return false;
+             if(board[row][i]!='.' && board[row][i]==c)
+                return false;
+            
+            
+            
+           if(board[3*(row/3)+i/3][3*(col/3)+i/3]!='.' && board[3*(row/3)+i/3][3*(col/3)+i%3]==c)
+            return false;
+            
+            
+            
+            
+        }
+        return true;
+        
+        
+    }
+    
+    
+    
     
 }
