@@ -1,39 +1,38 @@
 class Solution {
     public String countAndSay(int n) {
-        if(n==1)
-            return "1";
+        String res="1";
         
-        String last=countAndSay(n-1);
+        for(int i=1;i<n;i++){
+            String temp="";
+            for(int j=0;j<res.length();j++){
+                int num=getRepeatedString(res.substring(j));
+                temp=temp+num+""+res.charAt(j);
+                j=j+num-1;
+            }
+            
+            
+            res=temp;
+        }
+        return res;
         
-        return getNextNumber(last);
         
     }
     
-    private String getNextNumber(String last){
-        if(last.length()==0)
-            return "";
-        
-        int num=getRepeateNum(last);
-        
-        return num+""+last.charAt(0)+getNextNumber(last.substring(num));
-        
-    }
-    
-    
-    private int getRepeateNum(String last){
-        if(last.length()==0)
-            return 0;
+    private int getRepeatedString(String str){
         int count=1;
-        char initChar=last.charAt(0);
-        for(int i=1;i<last.length();i++){
-            if(initChar==last.charAt(i))
+        if(str.length()==0)
+            return 0;
+        
+        char first=str.charAt(0);
+        for(int i=1;i<str.length();i++){
+            if(str.charAt(i)==first)
                 count++;
             else
                 break;
         }
         
-        
         return count;
+        
         
     }
     
