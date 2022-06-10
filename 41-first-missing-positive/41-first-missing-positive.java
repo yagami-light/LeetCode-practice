@@ -1,11 +1,12 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        
-        Arrays.sort(nums);
+        Set<Integer> set=Arrays.stream(nums).boxed().collect(Collectors.toSet());
+        // System.out.println(set);
+        // Arrays.sort(nums);
         for(int i=1;i<=nums.length+1;i++){
             // System.out.println("i"+i);
             // System.out.println(Arrays.binarySearch(nums,i));
-            if(Arrays.binarySearch(nums,i)<0)
+            if(!set.contains(i))
                 return i;
             
         }
