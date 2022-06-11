@@ -1,54 +1,78 @@
 class Solution {
     public String multiply(String num1, String num2) {
-    if (num1.equals("0") || num2.equals("0")) {
-        return "0";
-    }  
-    String ans = "0";
-    int index = 0; //记录当前是哪一位，便于后边补 0 
-    for (int i = num2.length() - 1; i >= 0; i--) {
-        int carry = 0; //保存进位
-        String ans_part = ""; //直接用字符串保存每位乘出来的数
-        int m = num2.charAt(i) - '0';
-        //乘上每一位
-        for (int j = num1.length() - 1; j >= 0; j--) {
-            int n = num1.charAt(j) - '0';
-            int mul = m * n + carry; 
-            ans_part = mul % 10 + "" + ans_part;
-            carry = mul / 10;
-        }
-        if (carry > 0) {
-            ans_part = carry + "" + ans_part;
-        }
-        //补 0 
-        for (int k = 0; k < index; k++) {
-            ans_part = ans_part + "0";
-        }
-        index++;
-        //和之前的结果相加
-        ans = sumString(ans, ans_part);
-    }
-    return ans;
-}
-//大数相加
-private String sumString(String num1, String num2) {
-    int carry = 0;
-    int num1_index = num1.length() - 1;
-    int num2_index = num2.length() - 1;
-    String ans = "";
-    while (num1_index >= 0 || num2_index >= 0) {
-        int n1 = num1_index >= 0 ? num1.charAt(num1_index) - '0' : 0;
-        int n2 = num2_index >= 0 ? num2.charAt(num2_index) - '0' : 0;
-        int sum = n1 + n2 + carry;
-        carry = sum / 10;
-        ans = sum % 10 + "" + ans;
-        num1_index--;
-        num2_index--;
-    }
-    if (carry > 0) {
-        ans = carry + "" + ans;
-    }
-    return ans;
-}
+        if(num1.equals("0") || num2.equals("0")) return "0";
+        
+        int len1=num1.length();
+        int len2=num2.length();
+        
+        int index1=0,index2=0;
+        String res="";
+                    int index=0;
 
+        for(int i=len1-1;i>=0;i--){
+            
+            int carry=0;
+            int m=num1.charAt(i)-'0';
+            String curr_ans="";
+            
+            for(int j=len2-1;j>=0;j--){
+                
+                int n=num2.charAt(j)-'0';
+                int mul=(m*n)+carry;
+                 carry=mul / 10;
+                curr_ans=(mul % 10)+""+curr_ans;
+                
+                
+            }
+            if(carry>0){
+                // System.out.println("carry is "+carry);
+                curr_ans=carry+""+curr_ans;
+            }
+            for(int k=0;k<index;k++){
+                curr_ans=curr_ans+"0";
+            }
+            index++;
+            // System.out.println("idnex is "+index);
+            // System.out.println("res "+res+" curr_ans "+curr_ans );
+            res=stringSum(res,curr_ans);
+            
+        }
+             
+            
+            return res;
+        
+        
+    }
+    
+    private String stringSum(String num1,String num2){
+        
+        if(num1.length()==0 ) return num2;
+        if(num2.length()==0) return num1;
+        int index1=num1.length()-1,index2=num2.length()-1;
+        int carry=0;
+        String ans="";
+        while(index1>=0|| index2 >=0){
+            
+            int num1int=index1<0 ? 0 : num1.charAt(index1--)-'0';
+            int num2int=index2<0 ? 0 : num2.charAt(index2--)-'0';
+            
+            int digit=(num1int+num2int)+carry;
+            ans=(digit% 10)+ans;
+            carry=digit/10;
+            // index1--;
+            // index2--;
+            
+            
+        }
+        // System.out.println("sum "+ans);
+        
+        if(carry>0)
+            ans=carry+ans;
+        
+        
+        return ans;
+        
+        
+    }
     
 }
