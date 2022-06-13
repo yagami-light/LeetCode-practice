@@ -18,16 +18,17 @@ class Solution {
         }
         
         for(int i=0;i<nums.length;i++){
-            if(nums[i]==-100) continue;
-            if(i>0 && nums[i]==nums[i-1] && nums[i-1]!=-100) continue;
-            // found[i]=true;
+            // if(nums[i]==-100) continue;
+            if(found[i]) continue;
+            if(i>0 && nums[i]==nums[i-1] && found[i-1]==true) continue;
+            found[i]=true;
             currList.add(nums[i]);
             int temp=nums[i];
-            nums[i]=-100;
+            // nums[i]=-100;
             permute(nums,currList,res,found);
             currList.remove(currList.size()-1);
             found[i]=false;
-            nums[i]=temp;
+            // nums[i]=temp;
             
         }
         
