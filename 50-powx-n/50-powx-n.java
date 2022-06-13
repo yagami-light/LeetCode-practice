@@ -1,41 +1,44 @@
 class Solution {
-   public double powRecursion(double x, int n) {
-    if (n == 0) {
-        return 1;
-    }
-    //偶数的情况
-    if ((n & 1) == 0) { 
-        double temp = powRecursion(x, n / 2);
-        return temp * temp;
-    } else { //奇数的情况
-        double temp = powRecursion(x, n / 2);
-        return temp * temp * x;
-    }
-}
+    public double myPow(double x, int n) {
+        int sign=n>=0 ? 1: -1;
+        
+        if(x==1) return 1;
+        if(x==-1) return n%2==0 ? 1 : -1;
+                if(n==Integer.MIN_VALUE) return 0;
 
-public double myPow(double x, int n) {
-    if (x == -1) {
-        if ((n & 1) != 0) {
-            return -1;
-        } else {
+        n=Math.abs(n);
+        if(sign==1) return myPowCust(x,n);
+        else
+            return 1/myPowCust(x,n);
+        
+        
+        
+        
+    }
+    
+    public double myPowCust(double x,int n){
+        
+        
+        if(n==0)
             return 1;
+        else{
+            
+            if(n%2==0)
+            {
+                double res=myPowCust(x,n/2);
+                return res*res;
+            }else{
+                double res=myPowCust(x,n/2);
+                return res*res*x;
+            }
+            
+            
         }
+        
+        
+        
+        
     }
-    if (x == 1.0f)
-        return 1;
-
-    if (n == -2147483648) {
-        return 0;
-    }
-    double mul = 1;
-    if (n > 0) {
-        mul = powRecursion(x, n);
-    } else {
-        n = -n;
-        mul = powRecursion(x, n);
-        mul = 1 / mul;
-    }
-    return mul;
-}
-
+    
+    
 }
