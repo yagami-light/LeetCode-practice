@@ -1,44 +1,45 @@
 class Solution {
-     public final Set<Integer> setCol=new HashSet();
-        public final Set<Integer> setDiag1=new HashSet();
-        public final Set<Integer> setDiag2=new HashSet();
+    public final Set<Integer> colSet=new HashSet();
+    public final Set<Integer> diag1Set=new HashSet();
+    public final Set<Integer> diag2Set=new HashSet();
+    
+    
     public int totalNQueens(int n) {
-       
-      return totalNQueensUtil(0,0,n);
+        return totalNQueen1(0,0,n);
+        
     }
     
-    
-    private int totalNQueensUtil(int row,int count,int n){
+    public  int totalNQueen1(int row,int count,int n){
+        
         for(int col=0;col<n;col++){
             
-            if(setCol.contains(col)) continue;
+            if(colSet.contains(col)) continue;
             
-            int diag1=col-row;
-            int diag2=col+row;
-            if(setDiag1.contains(diag1)) continue;
+            int diag1=row+col;
+            int diag2=row-col;
             
-            if(setDiag2.contains(diag2)) continue;
+            if(diag1Set.contains(diag1)) continue;
+            if(diag2Set.contains(diag2)) continue;
+            
             if(row==n-1){
                 count++;
-                
             }else{
+                colSet.add(col);
+                diag1Set.add(diag1);
+                diag2Set.add(diag2);
+                count=totalNQueen1(row+1,count,n);
+                colSet.remove(col);
+                diag1Set.remove(diag1);
+                diag2Set.remove(diag2);
                 
-                setCol.add(col);
-                setDiag1.add(diag1);
-                setDiag2.add(diag2);
-                 count=totalNQueensUtil(row+1,count,n);
-                setCol.remove(col);
-                setDiag1.remove(diag1);
-                setDiag2.remove(diag2);
-
                 
             }
-
             
+            
+                
             
         }
         return count;
-        
         
         
     }
