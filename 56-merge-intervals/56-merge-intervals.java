@@ -12,6 +12,7 @@ class Solution {
             if(newinterval[1]>=currInterval[0]){
                 
                 newinterval[1]=Math.max(newinterval[1],currInterval[1]);
+                // newinterval[1]=-111;
                 
             }else{
                 
