@@ -1,28 +1,35 @@
 class Solution {
-    Map<String,Integer> cache=new HashMap();
     public int uniquePathsWithObstacles(int[][] grid) {
+        int m=grid.length;
+        int n=grid[0].length;
+        if(grid[m-1][n-1]==1) return 0;
+        grid[m-1][n-1]=1;
+        // int[] dp=new int[n];
+        for(int i=m-1;i>=0;i--){
+         
+            
+            
+            for(int j=n-1;j>=0;j--){
+                
+                // newRow[j] =newRow[j+1]+dp[j]; 
+                if(i==m-1 && j==n-1) continue;
+                if(grid[i][j]==1) grid[i][j]=0;
+                else{
+                
+                grid[i][j]=((i==m-1) ? 0 : grid[i+1][j] )+ ((j==n-1) ? 0 : grid[i][j+1]);
+                    
+                }
+                
+                
+            }
+            
         
-        return uniquePathsWithObstacles(grid,0,0);
+            
+            
+        }
+        
+        return grid[0][0];
+        
         
     }
-    
-    
-    private int uniquePathsWithObstacles(int[][]  grid,int i,int j){
-        
-        if(i<0 || j<0 || i >= grid.length || j >= grid[0].length || grid[i][j]==1){
-            return 0;
-        }
-        if(i==grid.length-1 && j == grid[0].length-1){
-            return 1;
-        }
-        String key=i+"@"+j;
-        if(cache.get(key)!=null)
-            return cache.get(key);
-         cache.put(key,uniquePathsWithObstacles(grid,i+1,j) + uniquePathsWithObstacles(grid,i,j+1));
-        return cache.get(key);
-        
-        
-        
-    }
-    
 }
