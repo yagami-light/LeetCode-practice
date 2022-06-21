@@ -13,7 +13,7 @@ class Solution {
             
         }
         
-        for(int i=index;i<=n;i++){
+        for(int i=index;i<=(n-(k-currList.size())+1);i++){
             
             currList.add(i);
             combineUtil(n,k,currList,res,i+1);
