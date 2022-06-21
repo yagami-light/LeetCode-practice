@@ -1,52 +1,38 @@
 class Solution {
-    public int minDistance(String word1, String word2) {
-        if(word1.length()==0 && word2.length()==0)
-            return 0;
-        if(word1.length()==0)
-            return word2.length();
-        if(word2.length()==0)
-            return word1.length();
-        int m=word1.length();
-        int n=word2.length();
-        // int[][] dp=new int[m+1][n+1];
-        
-        int[] row=new int[n+1];
-        for(int i=0;i<row.length;i++)
-            row[i]=i;
-        
-        System.out.println("printing array : "+Arrays.toString(row));
-        
-        
-        for(int i=1;i<=m;i++){
-            
-            int[] newRow=new int[n+1];
-            for(int j=0;j<=n;j++){
-                
-                if(i==0 && j==0)
-                    newRow[j]=0;
-                
-                else if(j==0)
-                    newRow[j]=i;
-                else{
-                    
-                    newRow[j]= 1 + Math.min(row[j-1],Math.min(row[j],newRow[j-1]));
-                    
-                    // dp[i][j]=1+Math.min(dp[i-1][j-1] ,Math.min(dp[i-1][j] , dp[i][j-1]));
-                    if(word1.charAt(i-1)==word2.charAt(j-1))
-                    newRow[j]= Math.min(newRow[j],row[j-1]);
-                    // dp[i][j]=Math.min(dp[i][j],dp[i-1][j-1]);
-                    
-                    
-                }
-                
-            }
-            row=newRow;
-            
-        }
-        
-        return row[n];
-        
-        
-        
+ public int minDistance(String word1, String word2) {
+    if (word1.length() == 0 && word2.length() == 0) {
+        return 0;
     }
+    if (word1.length() == 0) {
+        return word2.length();
+    }
+    if (word2.length() == 0) {
+        return word1.length();
+    }
+    int[] ans = new int[word2.length() + 1];
+
+    for (int i = 0; i <= word2.length(); i++) {
+        ans[i] = i;
+    }
+    int n1 = word1.length();
+    int n2 = word2.length();
+    for (int i = 1; i <= n1; i++) {
+        int temp = ans[0];
+        ans[0] = ans[0] + 1;
+        for (int j = 1; j <= n2; j++) {
+            int min_delete = Math.min(ans[j], ans[j - 1]) + 1;
+            //上一列的上一个位置，直接用 temp
+            int replace = temp;
+            if (word1.charAt(i - 1) != word2.charAt(j - 1)) {
+                replace++;
+            }
+            //保存当前列的信息
+            temp = ans[j];
+            //再进行更新
+            ans[j] = Math.min(min_delete, replace);
+        }
+    }
+    return ans[n2];
+}
+
 }
