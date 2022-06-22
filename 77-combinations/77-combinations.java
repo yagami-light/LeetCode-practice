@@ -18,7 +18,7 @@ class Solution {
             for(int j=1;j<=i && j<=k;j++){
                 
                 
-                dp[i][j]=new ArrayList();
+                dp[i][j]=new LinkedList();
                 if(i>j)
                 dp[i][j].addAll(dp[i-1][j]);
                 
