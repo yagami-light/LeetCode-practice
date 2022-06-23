@@ -11,22 +11,22 @@
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         
-        return deleteDuplicatesUtil(head);
-    }
-    
-    private ListNode deleteDuplicatesUtil(ListNode head){
-        if(head==null || head.next==null)
-            return head;
+        ListNode curr=head;
         
-        ListNode HeadToNExt=head.next;
-        HeadToNExt=deleteDuplicatesUtil(HeadToNExt);
-        if(HeadToNExt.val==head.val){
-            return HeadToNExt;
-        }else{
-            head.next=HeadToNExt;
-            return head;
+        while(curr!=null && curr.next!=null){
+            if(curr.next.val==curr.val){
+                curr.next=curr.next.next;
+            }
+            else
+                
+            curr=curr.next;
+            
+            
         }
+        
+        
+        return head;
+        
+        
     }
-    
-    
 }
