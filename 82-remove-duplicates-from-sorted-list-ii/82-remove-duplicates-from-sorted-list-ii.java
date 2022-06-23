@@ -13,25 +13,32 @@ class Solution {
         
         return deleteDuplicatesUtil(head);
         
+        
     }
-    
-    
+
+
     private ListNode deleteDuplicatesUtil(ListNode head){
-        if(head==null || head.next==null)
+        if(head==null)
             return head;
         
-        ListNode temp=head;
-        if(temp.val==temp.next.val){
-        while(temp.next!=null && temp.val==temp.next.val){
-            temp=temp.next;
+        if(head!=null && head.next!=null && head.val==head.next.val){
+            ListNode temp=head;
+            while(temp.next!=null && temp.val==temp.next.val)
+            {
+                temp=temp.next;
+            }
+            
+            return deleteDuplicatesUtil(temp.next);
+            
         }
-     
-         return deleteDuplicatesUtil(temp.next);   
+        else{
+            
+            head.next=deleteDuplicatesUtil(head.next);
+            return head;
+            
+            
         }
         
-        head.next= deleteDuplicatesUtil(head.next);
-        return head;
-            
+        
     }
-    
 }
