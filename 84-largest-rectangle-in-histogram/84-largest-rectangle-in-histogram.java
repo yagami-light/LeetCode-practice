@@ -1,49 +1,49 @@
 class Solution {
-    public int largestRectangleArea(int[] nums) {
+    public int largestRectangleArea(int[] heights) {
         
-        return largestRectangleAreaUtil(nums,0,nums.length-1);
+        return largestRectangleArea(heights,0,heights.length-1);
     }
     
-    private int largestRectangleAreaUtil(int[] nums,int start,int end){
+    private int largestRectangleArea(int[] heights,int start,int end){
         if(start==end)
-            return nums[start];
+            return heights[start];
         
         int mid=(start+end)/2;
         
+        int left=largestRectangleArea(heights,start,mid);
+        int right=largestRectangleArea(heights,mid+1,end);
+        int middleArea=largestRectangleAreaMid(heights,start,mid,end);
         
-        int area1=largestRectangleAreaUtil(nums,start,mid);
-        int area2=largestRectangleAreaUtil(nums,mid+1,end);
         
-        int area3=calculateMidArea(nums,start,end,mid);
-        
-        return Math.max(area3,Math.max(area1,area2));
+        return Math.max(Math.max(left,right),middleArea);
         
     }
     
-    private int calculateMidArea(int[] nums,int start,int end,int mid){
+    
+    private int largestRectangleAreaMid(int[] heights,int start,int mid,int end){
         int i=mid;
         int j=mid+1;
-        int minHeight=Math.min(nums[i],nums[j]);
-        int width=2* minHeight;
-        int area=0;
-        while(i>=start && j<=end){
-            
-            minHeight=Math.min(minHeight,Math.min(nums[i],nums[j]));
-            area=Math.max(area,minHeight * (j-i+1));
+        
+        int minHeight=Math.min(heights[i],heights[j]);
+        int minArea=2*minHeight;
+        
+        while(i>=start  && j<=end){
+            minHeight=Math.min(minHeight,Math.min(heights[i],heights[j]));
+            minArea=Math.max(minArea,minHeight * (j-i+1));
             if(i==start)
                 j++;
-            else if(j==end)
+            else if(j==end){
                 i--;
-            else if(nums[i-1] <= nums[j+1])
+            }
+            else if(heights[i-1] > heights[j+1]){
+                i--;
+            }else
                 j++;
-            else
-                i--;
-            
             
         }
+        return minArea;
         
         
-        return area;
         
         
     }
