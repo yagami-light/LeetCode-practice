@@ -1,54 +1,54 @@
 class Solution {
     public int largestRectangleArea(int[] heights) {
         
-        return largestRectangleArea(heights,0,heights.length-1);
-    }
-    
-    private int largestRectangleArea(int[] heights,int start,int end){
-        if(start==end)
-            return heights[start];
+        int n=heights.length;
+        if(n==1)
+            return heights[0];
         
-        int mid=(start+end)/2;
+        int[] leftMinIndex=new int[n];
+        int[] rightMinIndex=new int[n];
+        int area=0;
+        leftMinIndex[0]=-1;
+        for(int i=1;i<n;i++){
+            int p=i-1;
+            
+            while(p>=0 && heights[p]>=heights[i])
+                p=leftMinIndex[p];
+            
+            leftMinIndex[i]=p;
+            
+        } 
         
-        int left=largestRectangleArea(heights,start,mid);
-        int right=largestRectangleArea(heights,mid+1,end);
-        int middleArea=largestRectangleAreaMid(heights,start,mid,end);
-        
-        
-        return Math.max(Math.max(left,right),middleArea);
-        
-    }
-    
-    
-    private int largestRectangleAreaMid(int[] heights,int start,int mid,int end){
-        int i=mid;
-        int j=mid+1;
-        
-        int minHeight=Math.min(heights[i],heights[j]);
-        int minArea=2*minHeight;
-        
-        while(i>=start  && j<=end){
-            minHeight=Math.min(minHeight,Math.min(heights[i],heights[j]));
-            minArea=Math.max(minArea,minHeight * (j-i+1));
-            if(i==start)
-                j++;
-            else if(j==end){
-                i--;
+        // System.out.println("left min array :"+Arrays.toString(leftMinIndex));
+         rightMinIndex[n-1]=n;
+        for(int i=n-2;i>=0;i--){
+            // System.out.println("alex");
+            int p=i+1;
+            
+            while(p<heights.length && heights[p]>=heights[i]){
+                p=rightMinIndex[p];
+                         // System.out.println("alex2");
+   
             }
-            else if(heights[i-1] > heights[j+1]){
-                i--;
-            }else
-                j++;
+            
+            rightMinIndex[i]=p;
             
         }
-        return minArea;
+          
+                // System.out.println("right min array :"+Arrays.toString(rightMinIndex));
+
+        
+        rightMinIndex[n-1]=n;
+        
+        for(int i=0;i<heights.length;i++){
+            
+            area=Math.max(area,heights[i]*(rightMinIndex[i]-leftMinIndex[i]-1));
+            
+        }
         
         
+        return area;
         
         
     }
-    
-    
-    
-    
 }
