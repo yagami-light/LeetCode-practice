@@ -1,44 +1,19 @@
 class Solution {
     public List<Integer> grayCode(int n) {
-        List<Integer> list=new ArrayList();
-      for(String str:getListForGrayCode(n,list)){
-          list.add(Integer.parseInt(str,2));
-      }
-       System.out.println(getListForGrayCode(n,list));
+        List<Integer> res=new ArrayList();
+        res.add(0);
         
-        return list;
-    }
-    
-    
-     List<String> getListForGrayCode(int n,List<Integer> result){
-            if(n==1){
-                List<String> result1=new ArrayList();
-                result1.add("0");
-                result1.add("1");
-                return (result1);
-            }
-         else{
-              List<String> newResult=new ArrayList();
-             for(String str: getListForGrayCode(n-1,result)){
-                 // result.remove(str);
-                 newResult.add("0"+str);
-             }
-             List<String> iter=getListForGrayCode(n-1,result);
-             Collections.reverse(iter);
-             for(String str:iter){
+        for(int i=0;i<n;i++){
+            int size=res.size();
+            for(int k=size-1;k>=0;k--){
                 
-                 // result.remove(str);
-
-                 newResult.add("1"+str);
-
-               
-             }
-             
-               return newResult;
-             
-             
-         }
+                res.add(res.get(k) | 1<<i);
+                
+                
+                
+            }
         }
+        return res;
         
-    
+    }
 }
