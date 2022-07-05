@@ -14,7 +14,7 @@ class Solution {
                     if(j>0 && nums[j]==nums[j-1] &&(i>>(j-1)&1)==0){
                         
                         illegal=true;
-                        break;
+                        // break;
                         
                     }else{
                         list.add(nums[j]);
