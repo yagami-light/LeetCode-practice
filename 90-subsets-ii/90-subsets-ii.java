@@ -1,32 +1,35 @@
 class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        List<List<Integer>> result=new ArrayList();
+        
+        List<List<Integer>> ans=new ArrayList();
+        ans.add(new ArrayList());
+        
         Arrays.sort(nums);
-        boolean[] used=new boolean[nums.length];
-        subsetsWithDupUtil(nums,0,new ArrayList(),result,used);
-        
-        return result;
-        
-    }
-    private void subsetsWithDupUtil(int[] nums,int index,List<Integer> currList,List<List<Integer>> result,boolean[] used){
-        result.add(new ArrayList(currList));
-        
-        for(int i=index;i<nums.length;i++){
-            // if(used[i]) continue;
-            if(i>index && nums[i]==nums[i-1]) continue;
-            currList.add(nums[i]);
-            used[i]=true;
-            subsetsWithDupUtil(nums,i+1,currList,result,used);
-            currList.remove(currList.size()-1);
-            used[i]=false;
+        int start=1;
+        for(int i=0;i<nums.length;i++){
             
+            List<List<Integer>> temp_list=new ArrayList();
             
-            
+            for(int j=0;j<ans.size();j++){
+                
+                List<Integer> list=ans.get(j);
+                if(i>0 && nums[i]==nums[i-1] && j<start) continue;
+                
+                List<Integer> temp=new ArrayList(list);
+                
+                temp.add(nums[i]);
+                temp_list.add(temp);
+            }
+                        start=ans.size();
+
+            ans.addAll(temp_list);
             
         }
         
         
+        return ans;
+        
+        
+        
     }
-    
-    
 }
