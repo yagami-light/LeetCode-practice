@@ -1,35 +1,38 @@
 class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         
-        List<List<Integer>> ans=new ArrayList();
-        ans.add(new ArrayList());
-        
         Arrays.sort(nums);
-        int start=1;
-        for(int i=0;i<nums.length;i++){
+        List<List<Integer>> result=new ArrayList();
+        int subSetNum=1<<nums.length;
+        
+        for(int i=0;i<subSetNum;i++){
+            List<Integer> list=new ArrayList();
+            boolean illegal=false;
             
-            List<List<Integer>> temp_list=new ArrayList();
-            
-            for(int j=0;j<ans.size();j++){
+            for(int j=0;j<nums.length;j++){
+                if((i>>j & 1) ==1){
+                    if(j>0 && nums[j]==nums[j-1] &&(i>>(j-1)&1)==0){
+                        
+                        illegal=true;
+                        break;
+                        
+                    }else{
+                        list.add(nums[j]);
+                    }
+                    
+                    
+                    
+                }
                 
-                List<Integer> list=ans.get(j);
-                if(i>0 && nums[i]==nums[i-1] && j<start) continue;
                 
-                List<Integer> temp=new ArrayList(list);
-                
-                temp.add(nums[i]);
-                temp_list.add(temp);
             }
-                        start=ans.size();
-
-            ans.addAll(temp_list);
+            
+            if(!illegal)
+                result.add(list);
+            
             
         }
         
-        
-        return ans;
-        
-        
-        
+        return result;
     }
 }
