@@ -2,42 +2,39 @@ class Solution {
     public List<String> restoreIpAddresses(String s) {
         int len=s.length();
         List<String> res=new ArrayList();
-        for(int i=1;i<4 && i<len-2;i++){
+        for(int i=1;i<=3;i++){
             
-            
-            for(int j=i+1;j<i+4 && j< len-1;j++){
+            for(int j=1;j<=3;j++){
                 
-                
-                for(int k=j+1;k<k+4 && k < len;k++){
+                for(int k=1;k<=3;k++){
                     
-                    String str1=s.substring(0,i);
-                    String str2=s.substring(i,j);
-                    String str3=s.substring(j,k);
-                    String str4=s.substring(k,len);
                     
-                    if(isValid(str1) && isValid(str2) && isValid(str3) && isValid(str4)){
-                        res.add(str1+"."+str2+"."+str3+"."+str4);
+                    for(int l=1;l<=3;l++){
+                        
+                        if(i+j+k+l == s.length()){
+                            
+                            
+                            int int1=Integer.parseInt("0"+s.substring(0,i));
+                            int int2=Integer.parseInt("0"+s.substring(i,i+j));
+                            int int3=Integer.parseInt("0"+s.substring(i+j,i+j+k));
+                            int int4=Integer.parseInt("0"+s.substring(i+j+k));
+                            // if()
+                            if(int1<=255 && int2<=255 && int3<=255 && int4<=255){
+                                if((""+int1+"."+int2+"."+int3+"."+int4).length() == s.length()+3)
+                                res.add(""+int1+"."+int2+"."+int3+"."+int4);
+                            }
+                            
+                        }
                         
                     }
                     
                     
-                    
-                    
                 }
                 
-                
             }
-            
             
         }
         return res;
         
     }
-    
-    private boolean isValid(String s){
-        if(s.length()>3 || s.length()==0 || (s.charAt(0)=='0' && s.length()>1) || Integer.parseInt(s)>255)
-            return false;
-        return true;
-    }
-    
 }
