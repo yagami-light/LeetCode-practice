@@ -14,14 +14,27 @@
  * }
  */
 class Solution {
+    
+    private TreeNode clone(TreeNode node,int offset){
+        if(node==null)
+            return null;
+        
+        TreeNode clonedNode=new TreeNode(node.val+offset);
+        clonedNode.left=clone(node.left,offset);
+        clonedNode.right=clone(node.right,offset);
+        
+        return clonedNode;
+        
+        
+        
+    }
+    
     public List<TreeNode> generateTrees(int n) {
         ArrayList<TreeNode>[] dp=new ArrayList[n+1];
-        dp[0]=new ArrayList();
         if(n==0)
             return dp[0];
-        
+        dp[0]=new ArrayList();
         dp[0].add(null);
-        
         for(int len=1;len<=n;len++){
             dp[len]=new ArrayList();
             
@@ -30,29 +43,27 @@ class Solution {
                 int left=root-1;
                 int right=len-root;
                 
-                for(TreeNode leftTree: dp[left]){
+                for(TreeNode leftTree:dp[left]){
                     
                     for(TreeNode rightTree:dp[right]){
-                        TreeNode node=new TreeNode(root);
-                        node.left=leftTree;
-                        node.right=clone(rightTree,root);
-                        dp[len].add(node);
+                        
+                            TreeNode node=new TreeNode(root);
+                    node.left=leftTree;
+                    node.right=clone(rightTree,root);
+                    dp[len].add(node);
+                        
                     }
+                    
+                    
                 }
+                
             }
+            
         }
         
         return dp[n];
         
+        
+        
     }
-    
-    private TreeNode clone(TreeNode node,int offset){
-        if(node==null)
-            return null;
-        TreeNode root=new TreeNode(node.val+offset);
-        root.left=clone(node.left,offset);
-        root.right=clone(node.right,offset);
-        return root;
-    }
-    
 }
