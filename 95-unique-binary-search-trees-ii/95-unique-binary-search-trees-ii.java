@@ -15,44 +15,44 @@
  */
 class Solution {
     public List<TreeNode> generateTrees(int n) {
+        ArrayList<TreeNode>[] dp=new ArrayList[n+1];
+        dp[0]=new ArrayList();
+        if(n==0)
+            return dp[0];
         
-        return generateTreesUtil(1,n);
-    }
-    
-    
-    private List<TreeNode> generateTreesUtil(int start,int end){
-        List<TreeNode> res=new ArrayList();
-        if(start==end)
-            return Collections.singletonList((new TreeNode(start)));
-        if(start>end)
-            return Collections.singletonList(null);
-        for(int i=start;i<=end;i++){
+        dp[0].add(null);
+        
+        for(int len=1;len<=n;len++){
+            dp[len]=new ArrayList();
             
-            
-            List<TreeNode> leftNodes=generateTreesUtil(start,i-1);
-            List<TreeNode> rightNodes=generateTreesUtil(i+1,end);
-
-            for(TreeNode lnode:leftNodes){
+            for(int root=1;root<=len;root++){
                 
-                for(TreeNode rnode:rightNodes){
+                int left=root-1;
+                int right=len-root;
+                
+                for(TreeNode leftTree: dp[left]){
                     
-                                TreeNode node=new TreeNode(i);
-                    node.left=lnode;
-                    node.right=rnode;
-                    res.add(node);
-                    
-                    
+                    for(TreeNode rightTree:dp[right]){
+                        TreeNode node=new TreeNode(root);
+                        node.left=leftTree;
+                        node.right=clone(rightTree,root);
+                        dp[len].add(node);
+                    }
                 }
-                
             }
-            
         }
         
-        return res;
+        return dp[n];
         
-        
-        
-        
+    }
+    
+    private TreeNode clone(TreeNode node,int offset){
+        if(node==null)
+            return null;
+        TreeNode root=new TreeNode(node.val+offset);
+        root.left=clone(node.left,offset);
+        root.right=clone(node.right,offset);
+        return root;
     }
     
 }
