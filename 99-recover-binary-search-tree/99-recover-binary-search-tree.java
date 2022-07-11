@@ -15,44 +15,51 @@
  */
 class Solution {
     public void recoverTree(TreeNode root) {
-        if(root==null) return;
         
         Stack<TreeNode> stack=new Stack();
         TreeNode curr=root;
-        List<TreeNode> res=new ArrayList();
-        List<Integer> integerList=new ArrayList();
+        boolean flag=true;
+        TreeNode prev=null;
+        TreeNode fistVio=null,fistVioNext=null,secondVio=null;
         while(curr!=null || !stack.isEmpty()){
             
             
             while(curr!=null){
-                
                 stack.add(curr);
                 curr=curr.left;
-                
-                
             }
             
             curr=stack.pop();
-            res.add(curr);
-            integerList.add(curr.val);
+            if(prev!=null && prev.val > curr.val ){
+                if(flag){
+                fistVio=prev;
+                fistVioNext=curr;
+                flag=!flag;
+                }else{
+                    secondVio=curr;
+                }
+            }
+            prev=curr;
             curr=curr.right;
             
+        }
+        
+        if(secondVio!=null){
+        int temp=fistVio.val;
+        fistVio.val=secondVio.val;
+        secondVio.val=temp;
+        }
+        else{
+            
+        int temp=fistVio.val;
+        fistVio.val=fistVioNext.val;
+        fistVioNext.val=temp;
+        }  
+            
+            
             
         }
         
-        System.out.println("list print :"+integerList);
-        System.out.println("Node list : "+res);
-        Collections.sort(integerList);
-        int count=0;
-        for(int i:integerList){
-            res.get(count++).val=i;
-        }
-        /*
         
-        1,3,2,4
-        
-        */
-        
-        
-    }
+    
 }
