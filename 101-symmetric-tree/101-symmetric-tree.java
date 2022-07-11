@@ -24,7 +24,7 @@ class Solution {
         if(left==null && right==null) return true;
         else if(left!=null && right!=null){
             
-            return left.val==right.val && isSymmetricUtil(left.right,right.left) && isSymmetricUtil(left.left,right.right);
+            return left.val == right.val && isSymmetricUtil(left.right,right.left) && isSymmetricUtil(left.left,right.right);
         }
         
         return false;
