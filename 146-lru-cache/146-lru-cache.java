@@ -1,107 +1,100 @@
 class LRUCache {
-    
-    private DlinkNode tail,head;
-    private Map<Integer,DlinkNode> map;
+    private Map<Integer,DlinkNode> cache;
+    private DlinkNode head,tail;
     private int capacity;
     private int count;
-
     class DlinkNode{
-        int value;
         int key;
-        DlinkNode next;
+        int value;
         DlinkNode prev;
-        
-        
+        DlinkNode next;
     }
     
-    private void deleteNode(DlinkNode node){
-        // System.out.println("delete ndoe");
-        DlinkNode nextNode=node.next;
+    private void removeNode(DlinkNode node){
         DlinkNode prevNode=node.prev;
+        DlinkNode nextNode=node.next;
+        
+        
         prevNode.next=nextNode;
         nextNode.prev=prevNode;
         
     }
-    private void addToHead(DlinkNode node){
-        // node.prev=head;
-       /*
-        head.next=node;
-        node.prev=head;
+    private void addNextToHead(DlinkNode node){
+        
         node.next=head.next;
-        head=node;
-        */
-        // System.out.println("node is :"+node);
-          node.prev = head;
-  node.next = head.next;
+        node.prev=head;
+        head.next.prev=node;
+        head.next=node;
+        
+        
+    }
+    
+    private DlinkNode removeTailNode(){
+        DlinkNode prev=tail.prev;
+        this.removeNode(prev);
+        
+        return prev;
+    }
+    
 
-  head.next.prev = node;
-  head.next = node;
-        
-        
-    }
     
-    private DlinkNode popTail(){
-        
-      
-        DlinkNode prevNode=tail.prev;
-       this.deleteNode(prevNode);
-        return prevNode;
-        
-        
-    }
-    
-    
-    private void  moveToHead(DlinkNode node){
-        this.deleteNode(node);
-        this.addToHead(node);
+    private void moveToHead(DlinkNode node){
+        this.removeNode(node);
+        this.addNextToHead(node);
     }
     
     public LRUCache(int capacity) {
-        map=new HashMap();
+        cache=new HashMap();
         this.capacity=capacity;
         count=0;
         head=new DlinkNode();
-        head.prev=null;
-        
         tail=new DlinkNode();
-        tail.next=null;
-        tail.prev=head;
         head.next=tail;
+        tail.prev=head;
+        head.prev=null;
+        tail.next=null;
         
     }
     
     public int get(int key) {
-        DlinkNode node=map.get(key);
-        if(node==null) return -1;
+        System.out.println("get key :"+key);
+        DlinkNode node=cache.get(key);
+        if(node!=null){
+            
+            this.moveToHead(node);
+            return node.value;
+        }
+        else{
+            return -1;
+        }
         
-        this.moveToHead(node);
-        return node.value;
+        
         
     }
     
     public void put(int key, int value) {
-        // System.out.println("alex is alex");
-          DlinkNode node=map.get(key);
-        if(node==null) {
+        System.out.println("put key :"+key);
+        DlinkNode node=cache.get(key);
+        if(node==null){
             DlinkNode addNode=new DlinkNode();
-            addNode.value=value;
             addNode.key=key;
-            this.map.put(key,addNode);
-            this.addToHead(addNode);
+            addNode.value=value;
+            cache.put(key,addNode);
+            this.addNextToHead(addNode);
             count++;
-            
-            if(count> capacity){
-                DlinkNode tail=this.popTail();
-                this.map.remove(tail.key);
+            if(count>capacity){
+                DlinkNode tailNode=this.removeTailNode();
+                cache.remove(tailNode.key);
                 count--;
+                
             }
             
-        }
-        else{
-            node.value=value;
+            
+        }else{
+                        node.value=value;
+
             this.moveToHead(node);
         }
-        
         
     }
 }
