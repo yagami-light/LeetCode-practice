@@ -23,35 +23,29 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        if(root==null) return root;
-        
-        Queue<Node> queue=new LinkedList();
-        queue.add(root);
-        while(!queue.isEmpty()){
-            int size=queue.size();
-            Node prev=null;
-            
-            for(int i=0;i<size;i++){
-
-            Node node=queue.remove();
-                                        // System.out.println("alex node value :"+node.val);
-
-            if(node.left!=null)
-                queue.add(node.left);
-            
-            if(node.right!=null)
-                queue.add(node.right);
-            
-            if(prev!=null){
-                prev.next=node;
-            }
-            prev=node;
-            
-            }
-            
-        }
-        
+        List<List<Node>> res=new ArrayList();
+        int height=0;
+        helper(root,height,res);
         return root;
         
     }
+    
+    private void helper(Node root, int height,List<List<Node>> res){
+        if(root==null) return;
+        
+        if(height >= res.size()){
+            res.add(new ArrayList());
+        }
+        
+        if(!res.get(height).isEmpty()){
+            List<Node> list=res.get(height);
+            list.get(list.size()-1).next=root;
+            // res.get(height).get().next=root;
+        }
+        res.get(height).add(root);
+        
+        helper(root.left,height+1,res);
+        helper(root.right,height+1,res);
+    }
+    
 }
