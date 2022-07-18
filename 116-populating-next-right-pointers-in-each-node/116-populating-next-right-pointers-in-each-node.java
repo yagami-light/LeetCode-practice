@@ -22,30 +22,28 @@ class Node {
 */
 
 class Solution {
-    Node prev=null;
     public Node connect(Node root) {
-        List<List<Node>> res=new ArrayList();
+        Node start=root;
         
-        helper(root,0,res);
+        while(start!=null){
+            
+            
+            Node curr=start;
+            while(curr!=null){
+                if(curr.left!=null){
+                    curr.left.next=curr.right;
+                }
+                if(curr.right!=null && curr.next!=null){
+                    curr.right.next=curr.next.left;
+                }
+                
+                curr=curr.next;
+                
+            }
+            start=start.left;
+            
+        }
+        
         return root;
     }
-    
-    private void helper(Node root,int height, List<List<Node>> res){
-        if(root==null)
-         return;
-        
-        
-        if(height>=res.size())
-            res.add(new ArrayList());
-        List<Node> list=res.get(height);
-        if(list.size()>0)
-        root.next=list.get(list.size()-1);
-        res.get(height).add(root);
-        
-        helper(root.right,height+1,res);
-        helper(root.left,height+1,res);
-        
-        
-    }
-    
 }
