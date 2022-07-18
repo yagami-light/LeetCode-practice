@@ -23,27 +23,26 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        Node start=root;
+        Node levelStart=root;
         
-        while(start!=null){
+        while(levelStart!=null){
             
-            
-            Node curr=start;
+            Node curr=levelStart;
             while(curr!=null){
-                if(curr.left!=null){
+                if(curr.left!=null)
                     curr.left.next=curr.right;
-                }
+                
                 if(curr.right!=null && curr.next!=null){
                     curr.right.next=curr.next.left;
                 }
-                
                 curr=curr.next;
                 
             }
-            start=start.left;
             
+            
+            levelStart=levelStart.left;
         }
-        
         return root;
+        
     }
 }
