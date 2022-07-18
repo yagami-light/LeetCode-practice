@@ -22,41 +22,30 @@ class Node {
 */
 
 class Solution {
+    Node prev=null;
     public Node connect(Node root) {
-        if(root==null) return null;
+        List<List<Node>> res=new ArrayList();
         
-        Queue<Node> queue=new LinkedList();
-        queue.add(root);
-        
-        while(!queue.isEmpty()){
-            System.out.println("test");
-            Node prev=null;
-            int size=queue.size();
-            // System.out.println(" size is :"+size);
-            for(int i=0;i<size;i++){
-                
-                Node node=queue.remove();
-                // System.out.println(" node value :"+node.val);
-                if(node.left!=null){
-                    System.out.println("left is there ");
-                    queue.add(node.left);
-                
-                }
-                if(node.right!=null){
-                    System.out.println("right is there ");
-                    queue.add(node.right);
-                    
-                    
-                }
-                if(prev!=null )
-                    prev.next=node;
-                prev=node;
-                
-            }
-            
-            
-        }
-        
+        helper(root,0,res);
         return root;
     }
+    
+    private void helper(Node root,int height, List<List<Node>> res){
+        if(root==null)
+         return;
+        
+        
+        if(height>=res.size())
+            res.add(new ArrayList());
+        List<Node> list=res.get(height);
+        if(list.size()>0)
+        root.next=list.get(list.size()-1);
+        res.get(height).add(root);
+        
+        helper(root.right,height+1,res);
+        helper(root.left,height+1,res);
+        
+        
+    }
+    
 }
