@@ -23,29 +23,77 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        List<List<Node>> res=new ArrayList();
-        int height=0;
-        helper(root,height,res);
+        
+       return helper(root);
+    }
+    
+    private Node helper(Node root){
+        
+        if(root==null)
+         return root;
+        
+        // System.out.println(:root value )
+        if(root.left!=null){
+
+            if(root.right!=null)
+                root.left.next=root.right;
+            else
+                root.left.next=getNextValidNode(root);
+            
+        }
+            
+           
+            
+        if(root.right!=null)
+            root.right.next=getNextValidNode(root);
+            
+
+        helper(root.right);
+                    helper(root.left);
+
         return root;
+        
         
     }
     
-    private void helper(Node root, int height,List<List<Node>> res){
-        if(root==null) return;
+    
+    private Node getNextValidNode2(Node root){
+        System.out.println("alex");
         
-        if(height >= res.size()){
-            res.add(new ArrayList());
+        while(root!=null){
+                        root=root.next;
+
+            // System.out.println("root value "+root.val);
+                        if(root.left!=null) return root.left;
+            
+            if(root.right!=null) return root.right;
+
         }
+        System.out.println("alex 2");
         
-        if(!res.get(height).isEmpty()){
-            List<Node> list=res.get(height);
-            list.get(list.size()-1).next=root;
-            // res.get(height).get().next=root;
-        }
-        res.get(height).add(root);
+        return null;
         
-        helper(root.left,height+1,res);
-        helper(root.right,height+1,res);
     }
+    
+     private Node getNextValidNode(Node root){
+        if(root==null)
+            return null;
+        
+        while(root.next!=null){
+            root=root.next;
+            if(root.left!=null)
+                return root.left;
+            if(root.right!=null)
+                return root.right;
+        }
+        
+        
+        return null;
+        
+        
+    }
+    
+    
+    
     
 }
