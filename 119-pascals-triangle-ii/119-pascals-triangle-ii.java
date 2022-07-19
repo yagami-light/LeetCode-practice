@@ -1,25 +1,25 @@
 class Solution {
     public List<Integer> getRow(int rowIndex) {
         List<Integer> res=new ArrayList();
-                List<Integer> prev=new ArrayList();
-
-        for(int i=0;i<=rowIndex;i++){
-            res=new ArrayList();
-            for(int j=0;j<=i;j++){
+        int prev=1;
+        res.add(1);
+        
+        
+        for(int i=1;i<=rowIndex;i++){
+            for(int j=1;j<i;j++){
                 
-               if(j==0||i==j)
-                        res.add(1);
-                    
-                    else 
-                        res.add(prev.get(j)+prev.get(j-1));
-                    
+                int temp=res.get(j);
+                res.set(j,prev+res.get(j));
+                prev=temp;
+                
                 
                 
             }
-            prev=res;
+            res.add(1);
+            
         }
-    
         
         return res;
-}
+        
+    }
 }
