@@ -6,10 +6,10 @@ class Solution {
         
         for(int i=1;i<=rowIndex;i++){
             
-            for(int j=1;j<i;j++){
-                int temp=res.get(j);
-                res.set(j,prev+res.get(j));
-                prev=temp;
+            for(int j=i-1;j>0;j--){
+                // int temp=res.get(j);
+                res.set(j,res.get(j-1)+res.get(j));
+                // prev=temp;
             }
             
             res.add(1);
