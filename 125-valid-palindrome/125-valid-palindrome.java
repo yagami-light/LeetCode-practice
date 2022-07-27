@@ -1,5 +1,5 @@
 class Solution {
-    public boolean isPalindrome(String s) {
+    public boolean isPalindrome1(String s) {
         
         
         char[] charArray=s.toCharArray();
@@ -31,4 +31,13 @@ class Solution {
         
         
     }
+    
+    public boolean isPalindrome(String s) {
+        
+        String str1=s.chars().mapToObj(c->(char)c).filter(Character::isLetterOrDigit).map(i->i.toString().toLowerCase()).collect(Collectors.joining(""));
+        System.out.println("string 1 "+str1);
+        
+        return str1.equals((new StringBuilder(str1)).reverse().toString());
+    }
+    
 }
