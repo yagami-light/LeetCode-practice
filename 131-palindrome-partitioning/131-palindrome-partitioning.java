@@ -1,35 +1,40 @@
 class Solution {
     public List<List<String>> partition(String s) {
-       List<List<String>> res=new ArrayList();
-        helper(s,0,new ArrayList(),res);
+        
+        List<List<String>>  res=new ArrayList();
+        dfs(s,0,new ArrayList(),res);
         
         return res;
+        
+        
     }
     
-    private void helper(String s,int i,List<String> currList,List<List<String>> res){
-        if(i>=s.length()){
+    
+    private void dfs(String s,int index,List<String> currList,List<List<String>> res){
+        if(index==s.length()){
             res.add(new ArrayList(currList));
-        }
-        
-        for(int j=i;j<s.length();j++){
-            if(isPalindrom(s.substring(i,j+1))){
-                currList.add(s.substring(i,j+1));
-                  helper(s,j+1,currList,res);
-                currList.remove(currList.size()-1);
+            return;
+        }else{
+            
+            for(int i=index;i<s.length();i++){
+                
+                String str=s.substring(index,i+1);
+                if(isPalindrome(str)){
+                    currList.add(str);
+                    dfs(s,i+1,currList,res);
+                    currList.remove(currList.size()-1);   
+                    
+                }
+                
                 
             }
-          
+            
+            
+            
         }
-        
-        
-        
-        
     }
     
-    
-    
-    private boolean isPalindrom(String str){
-        return str.equals((new StringBuilder(str)).reverse().toString());
+    private boolean isPalindrome(String str){
+        return str.equals(((new StringBuilder(str)).reverse().toString()));
     }
-    
 }
