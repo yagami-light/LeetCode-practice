@@ -1,25 +1,61 @@
 class Solution {
     public int longestConsecutive(int[] nums) {
-        Map<Integer,Integer> map=new HashMap();
-        int max=0;
-        for(int i:nums){
-            
-            if(!map.containsKey(i)){
+        Map<Integer,List<Integer>> map=new HashMap();
+        for(int val:nums)
+            map.put(val,new ArrayList());
+        
+        for(int val:nums){
+            if(map.containsKey(val-1)){
+                map.get(val-1).add(val);
+                map.get(val).add(val-1);
+            }
+            }
+        
+        for(int val:nums){
+            if(map.containsKey(val+1)){
+                map.get(val+1).add(val);
+                map.get(val).add(val+1);
+            }
+        }
+        
+        Queue<Integer> queue=new LinkedList();
+        Set<Integer> set=new HashSet();
+        int maxLength=0;
+        
+        for(int i: map.keySet()){
+            if(!set.contains(i)){
+            set.add(i);
+            queue.add(i);
+                   int length=1;
+            while(!queue.isEmpty()){
+             
+                int size=queue.size();
+                // for(int j=0;j<size;j++){
+                    int num=queue.remove();
+                    for(int val:map.get(num)){
+                        if(!set.contains(val)){
+                            set.add(val);
+                        queue.add(val);
+                        length++;
+                        
+                        }
+                        
+                    // }
+                    
+                }
+                maxLength=Math.max(maxLength,length);
                 
-                int left=map.containsKey(i-1) ? map.get(i-1) : 0;
-                int right=map.containsKey(i+1) ? map.get(i+1):0;
                 
-                int len=left+right+1;
-                map.put(i,len);
-                max=Math.max(max,len);
-                map.put(i-left,len);
-                map.put(i+right,len);
             }
             
             
+            
+        }
         }
         
         
-        return max;
+        return maxLength;
+        
+        
     }
 }
