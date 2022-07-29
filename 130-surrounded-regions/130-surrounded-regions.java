@@ -1,56 +1,62 @@
 class Solution {
+    int[] unionSet;
+    boolean[] hasEdgeO;
+    
+    
     public void solve(char[][] board) {
-        int row=board.length;
-        int col=board[0].length;
         
-        for(int i=0;i<row;i++){
-            check(board,i,0,row,col);
-            if(col>0)
-                check(board,i,col-1,row,col);
-        }
+        if(board.length==0 || board[0].length==0) return;
         
-        for(int j=0;j<col;j++){
-            check(board,0,j,row,col);
-            if(row>0)
-                check(board,row-1,j,row,col);
-        }
+        int height=board.length;
+        int width=board[0].length;
         
-        for(int i=0;i<row;i++){
+        unionSet=new int[height*width];
+        hasEdgeO=new boolean[unionSet.length];
+        
+        for(int i=0;i<unionSet.length;i++) unionSet[i]=i;
+        
+        for(int i=0;i<hasEdgeO.length;i++){
             
-            for(int j=0;j<col;j++){
-                
-                if(board[i][j]!='X'){
-                    if(board[i][j]=='1')
-                        board[i][j]='O';
-                    else
-                        board[i][j]='X';
-                    
-                }
-            }
+            int x=i/width, y=i%width;
+            hasEdgeO[i]=(board[x][y]=='O') && (x==0 || x==height-1 || y==0 || y==width-1);
+        }
+        
+        
+        for(int i=0;i<unionSet.length;i++){
+            
+             int x=i/width, y=i%width,up=x-1,right=y+1;
+            if(up>=0 && board[x][y]==board[up][y]) union(i,i-width);
+            if(right<width && board[x][y]==board[x][right]) union(i,i+1);
+            
+        }
+        
+        for(int i=0;i<unionSet.length;i++){
+            
+             int x=i/width, y=i%width;
+            if(board[x][y]=='O' && !hasEdgeO[find(i)])
+                board[x][y]='X';
             
         }
         
         
     }
     
-    private void check(char[][] board,int i,int j,int row,int col){
-        if(board[i][j]=='O'){
-            board[i][j]='1';
-            
-            if(i>0)
-                check(board,i-1,j,row,col);
-            if(j>0)
-                check(board,i,j-1,row,col);
-            
-            if(i<row-1)
-                check(board,i+1,j,row,col);
-            if(j<col-1)
-                check(board,i,j+1,row,col);
-            
-        }
+    private void union(int x, int y){
+        int rootX=find(x);
+        int rootY=find(y);
         
-        
+        boolean hasEdge=this.hasEdgeO[rootX] || this.hasEdgeO[rootY];
+        unionSet[rootX]=rootY;
+        hasEdgeO[rootY]=hasEdge;
+    }
+    
+    private int find(int x){
+        if(unionSet[x]==x) return x;
+        unionSet[x]=find(unionSet[x]);
+        return unionSet[x];
         
     }
+    
+    
     
 }
