@@ -15,13 +15,39 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
+        Stack<TreeNode>  nodeStack=new Stack();
+        Stack<String>  valueStack=new Stack();
+        int sum=0;
+        nodeStack.push(root);
+        valueStack.push(""+root.val);
+        while(!nodeStack.isEmpty()){
+            
+            TreeNode node=nodeStack.pop();
+            String value=valueStack.pop();
+            if(node.left!=null){
+                valueStack.push(value+node.left.val);
+                nodeStack.push(node.left);
+                
+            }
+            if(node.right!=null){
+                valueStack.push(value+node.right.val);
+
+                nodeStack.push(node.right);
+            }
+            
+            if(node.left==null && node.right==null){
+                // System.out.println("alex");
+                sum+=Integer.valueOf(value);
+                
+            }
+            
+            
+            
+            
+        }
         
-        return sumNumbers(root,0);
-    }
-    
-    private int sumNumbers(TreeNode root,int val){
-        if(root==null) return 0;
-        if(root.left==null && root.right==null ) return 10*val+root.val;
-        return sumNumbers(root.left,10*val+root.val) + sumNumbers(root.right,10*val+root.val);
+        
+        return sum;
+        
     }
 }
