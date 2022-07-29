@@ -15,30 +15,13 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        List<String> res=new ArrayList();
-        int total=0;
-        preOrder(root,"",res);
-        for(String str:res){
-            total+=Integer.parseInt(str);
-        }
         
-        // System.out.println("print array :"+res);
-        return total;
-        
+        return sumNumbers(root,0);
     }
     
-    private void preOrder(TreeNode root,String currString,List<String> res){
-        if(root.left==null && root.right==null) {
-            res.add(currString+root.val);
-            return;
-        }
-        if(root.left!=null)
-        preOrder(root.left,currString+root.val,res);
-                if(root.right!=null)
-
-         preOrder(root.right,currString+root.val,res);
-        
-        
+    private int sumNumbers(TreeNode root,int val){
+        if(root==null) return 0;
+        if(root.left==null && root.right==null ) return 10*val+root.val;
+        return sumNumbers(root.left,10*val+root.val) + sumNumbers(root.right,10*val+root.val);
     }
-    
 }
