@@ -1,12 +1,22 @@
 class Solution {
     public int singleNumber(int[] nums) {
-        Map<Integer,Integer> map=new HashMap();
-        for(int i:nums)
-            map.merge(i,1,Integer::sum);
-        
-        for(int i:map.keySet()){
-            if(map.get(i)==1) return i;
+        int sum=0;
+        for(int i=0;i<32;i++){
+            int count=0;
+            for(int k=0;k<nums.length;k++){
+            if((nums[k]>>>i & 1) ==1)
+                count++;
+                
+                
+            }
+            if(count %3!=0){
+                sum+=1<<i;
+            }
         }
-        return -1;
+        
+        
+        return sum;
+        
+        
     }
 }
