@@ -1,16 +1,13 @@
 class Solution {
     public int singleNumber(int[] nums) {
-      Arrays.sort(nums);
-        System.out.println("print array :"+Arrays.toString(nums));
-        int n=nums.length;
-  //1,2,2  
-   for(int i=0;i<n-1;){
-       if(nums[i]!=nums[i+1])
-           return nums[i];
-       i=i+2;
-   }
+        Set<Integer> set=new HashSet();
+        for(int i:nums){
+            if(set.contains(i)) set.remove(i);
+            else
+                set.add(i);
+        }
+        System.out.println("sest :"+set);
+        return set.iterator().next();
         
-        return nums[n-1];
-}
-    
+    }
 }
