@@ -1,14 +1,12 @@
 class Solution {
     public int singleNumber(int[] nums) {
-        Arrays.sort(nums);
-        System.out.println("print arrayu :"+Arrays.toString(nums));
-        int n=nums.length;
-        for(int i=0;i<n-2;){
-            System.out.println("nums i"+nums[i]+" nums i+2 :"+nums[i+2]);
-            if(nums[i]!=nums[i+2]) return nums[i];
-            i=i+3;
-        }
+        Map<Integer,Integer> map=new HashMap();
+        for(int i:nums)
+            map.put(i,map.getOrDefault(i,0)+1);
         
-        return nums[n-1];
+        for(int i:map.keySet()){
+            if(map.get(i)==1) return i;
+        }
+        return -1;
     }
 }
