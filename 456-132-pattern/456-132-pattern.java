@@ -1,45 +1,22 @@
 class Solution {
     public boolean find132pattern(int[] nums) {
         
-        int n=nums.length;
-       
-        
-        int[] minElement=new int[n];
-         minElement[0]=Integer.MAX_VALUE;
-        for(int i=1;i<n;i++){
-            System.out.println("minElement :"+minElement[i-1]+" nums[i-1] :"+nums[i-1]);
-            minElement[i]=Math.min(minElement[i-1],nums[i-1]);
+        int secondMax=Integer.MIN_VALUE;
+        Stack<Integer> stack=new Stack();
+        for(int i=nums.length-1;i>=0;i--){
             
-        }
-        
-       /*
-        [1,2,3,4]
-        [max,1,1]
-        
-        */
-        TreeSet<Integer> treeSet=new TreeSet();
-        // System.out.println("print min array : "+Arrays.toString(minElement));
-        
-        for(int i=n-1;i>=0;i--){
+            if(nums[i]<secondMax) return true;
             
-            int num=nums[i];
-            int minLeft=minElement[i];
-            // System.out.println("treeSet :"+treeSet);
-            Integer rightHigherNum=treeSet.lower(num);
-            // System.out.println("rightHigherNum :"+rightHigherNum);
-            // System.out.println("print num:"+num);
-
-            if(rightHigherNum!=null && minLeft<rightHigherNum && rightHigherNum < num) return true;
-            
-            
-            treeSet.add(num);
-            
+            while(!stack.isEmpty() && stack.peek()<nums[i]){
+                secondMax=Math.max(secondMax,stack.pop());
+            }
+                
+                
+            stack.push(nums[i]);
             
             
         }
-        
         return false;
-        
         
         
     }
