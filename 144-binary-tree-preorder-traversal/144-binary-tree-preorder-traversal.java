@@ -24,16 +24,17 @@ class Solution {
         while(!queue.isEmpty()){
             TreeNode node=queue.pop();
             res.add(node.val);
-             if(node.right!=null){
+            if(node.right!=null){
                 queue.push(node.right);
                 // res.add(node.right.val);
             }
+           
             if(node.left!=null){
                 queue.push(node.left);
                 // res.add(node.left.val);
                 
             }
-           
+             
         }
         
         return res;
