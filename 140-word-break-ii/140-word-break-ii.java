@@ -1,4 +1,5 @@
 class Solution {
+    Map<String,LinkedList<String>> cache=new HashMap();
     public List<String> wordBreak(String s, List<String> wordDict) {
         
        return dfs(s,new HashSet(wordDict));
@@ -6,7 +7,7 @@ class Solution {
     }
     
     private List<String> dfs(String s,Set<String> wordDict){
-        
+        if(cache.containsKey(s)) return cache.get(s);
         LinkedList<String> res=new LinkedList();
         if(s.length()==0){
             res.add("");
@@ -22,7 +23,8 @@ class Solution {
             }
         }
         
-        return res;
+         cache.put(s,res);
+        return cache.get(s);
         
         
     }
