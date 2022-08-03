@@ -44,23 +44,22 @@ class Solution {
         // if(list1==null && list2==null) return list1;
         if(list1==null) return list2;
         if(list2==null) return list1;
-        ListNode dummy=new ListNode();
+        // ListNode dummy=new ListNode();
         if(list1.val<=list2.val){
-            ListNode res=new ListNode(list1.val);
-            res.next=merge(list1.next,list2);
-            dummy.next=res;
+          list1.next=merge(list1.next,list2);
+            return list1;
             // return res;
         }else{
             
-           ListNode res=new ListNode(list2.val);
-            res.next=merge(list1,list2.next);
-             dummy.next=res;
-            // return res;
+           // ListNode res=new ListNode(list2.val);
+            list2.next=merge(list1,list2.next);
+             // dummy.next=res;
+            return list2;
             
             
         }
         
-        return dummy.next;
+        // return dummy.next;
     }
     
 }
