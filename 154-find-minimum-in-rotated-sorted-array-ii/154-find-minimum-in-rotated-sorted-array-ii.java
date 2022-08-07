@@ -10,8 +10,15 @@ class Solution {
         if(start==end)
             return nums[start];     
         int mid=(start+end)/2;
-        if(nums[mid]==nums[end])
+        if(nums[mid]==nums[end]){
+            if(end!=0 && nums[end] >=nums[end])
+                
             return helper(nums,start,end-1);
+            //else
+            
+            
+            
+        }
         if(nums[mid]>nums[end]){
             
             return helper(nums,mid+1,end);
