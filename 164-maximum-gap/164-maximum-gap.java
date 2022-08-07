@@ -1,43 +1,62 @@
 class Solution {
     public int maximumGap(int[] nums) {
+        if(nums==null || nums.length < 2) return 0;
         
-        int min=Integer.MAX_VALUE;
-        int max=Integer.MIN_VALUE;
-        
-        for(int i:nums){
-            min=Math.min(i,min);
-            max=Math.max(i,max);
-        }
-        
-        int interval=(int)Math.ceil((max-min+0.0)/(nums.length-1));
-        
-        int[] minGroup=new int[nums.length-1];
-        int[] maxGroup=new int[nums.length-1];
-        
-        Arrays.fill(minGroup,Integer.MAX_VALUE);
-        Arrays.fill(maxGroup,Integer.MIN_VALUE);
+        int max=nums[0];
         
         for(int i: nums){
-            if(i==min || i==max) continue;
-            int index= (i-min)/interval;
-            minGroup[index]=Math.min(minGroup[index],i);
-            maxGroup[index]=Math.max(maxGroup[index],i);
-
+            max=Math.max(max,i);
         }
-        int prev=min;
-        int maxDiff=0;
-        for(int i=0;i<minGroup.length;i++){
-            if(maxGroup[i]==Integer.MIN_VALUE) continue;
-            maxDiff=Math.max(maxDiff,minGroup[i]-prev);
-            prev=maxGroup[i];
+        
+        int[] aux=new int[nums.length];
+        int exp=1;
+        int R=10;
+        
+        while(max/exp>0){
+            
+            int[] count=new int[R];
+            /*
+            for(int i=0;i<count.length;i++){
+                System.out.println("print index :"+(nums[i]/exp) % 10);
+                count[(nums[i]/exp) % 10]++;
+            }
+            
+            */
+            
+             for (int i = 0; i < nums.length; i++) {
+            count[(nums[i] / exp) % 10]++;
+        }
+            
+            System.out.println("print count :"+Arrays.toString(count));
+            
+            for(int i=1;i<count.length;i++)
+                count[i]+=count[i-1];
+            System.out.println(" again print count:"+Arrays.toString(count));
+            
+            for(int i=nums.length-1;i>=0;i--){
+                aux[--count[(nums[i]/exp)%10]]=nums[i];
+            }
+            
+                        System.out.println("thried print count :"+Arrays.toString(count));
+
+            
+            for(int i=0;i<aux.length;i++)
+                nums[i]=aux[i];
+            
+            exp*=10;
             
         }
         
-        System.out.println("minGroup :"+Arrays.toString(minGroup));
-        System.out.println("maxGroup :"+Arrays.toString(maxGroup));
-
-         maxDiff=Math.max(maxDiff,max-prev);
+        System.out.println("print Array :"+Arrays.toString(nums));
+        int maxDiff=0;
+        for(int i=1;i<nums.length;i++){
+            System.out.println("alex");
+            maxDiff=Math.max(maxDiff,nums[i]-nums[i-1]);
+            
+        }
+        
         return maxDiff;
+        
         
     }
 }
