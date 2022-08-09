@@ -14,70 +14,28 @@
  * }
  */
 class BSTIterator {
-    
-    
-
-    TreeNode root=null;
+    TreeNode root;
     Deque<TreeNode> stack;
-    
+
     public BSTIterator(TreeNode root) {
         this.root=root;
         stack=new LinkedList();
-        // addAll(root);
-        
     }
     
-    private void addAll(TreeNode root){
-        
-         
-            
-            while(root!=null){
-                stack.push(root);
-                root=root.left;
-            }
-            
-            
-          
-        }
-        
-    
-    
-  /*  private void inOrder(TreeNode root){
-        
-        while(!stack.isEmpty() || root!=null){
-            
-            while(root!=null){
-                stack.push(root);
-                root=root.left;
-            }
-            
-            
-            root=stack.pop();
-            root=root.right;
-            
-        }
-        
-        
-    }
-    */
     public int next() {
-          
-            while(root!=null){
-                stack.push(root);
-                root=root.left;
-            }
-            
-             root=stack.pop();
-            int val=root.val;
-            root=root.right;
-        return val;
-       
+        while(root!=null){
+            stack.push(root);
+            root=root.left;
+        }
         
+        root=stack.pop();
+        int val=root.val;
+        root=root.right;
+        return val;
     }
     
     public boolean hasNext() {
-         return root!=null || !stack.isEmpty();
-        
+        return root!=null || !stack.isEmpty();
     }
 }
 
