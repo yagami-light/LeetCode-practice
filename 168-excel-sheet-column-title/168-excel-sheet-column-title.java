@@ -1,6 +1,6 @@
 class Solution {
     public String convertToTitle(int columnNumber) {
-        System.out.println("columnNumber :"+columnNumber);
+        // System.out.println("columnNumber :"+columnNumber);
         if(columnNumber==0) return "";
         // char res=(char)((columnNumber%26)+'A');
         // System.out.println("res :"+res);
