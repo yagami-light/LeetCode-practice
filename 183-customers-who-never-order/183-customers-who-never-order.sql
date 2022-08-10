@@ -1,4 +1,4 @@
 # Write your MySQL query statement below
 
 
-SELECT cust.name as Customers from Customers cust left outer join Orders ord on cust.id = ord.customerId where  ord.id is null
+select cust.name as Customers from Customers cust where NOT exists (select 1 from Orders ord where ord.customerId=cust.id)
