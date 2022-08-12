@@ -9,7 +9,7 @@ class Solution {
             
             for(int j=0;j<n;j++){
                 
-                if(grid[i][j]=='1' && !set.contains(i+"@"+j)){
+                if(grid[i][j]=='1'){
                     dfs(grid,i,j,set);
                     count++;
                 }
@@ -26,9 +26,10 @@ class Solution {
         int m=grid.length;
         int n=grid[0].length;
         
-        if(i<0 || j<0 || i>=m || j>=n || set.contains(i+"@"+j) || grid[i][j]=='0') return;
+        if(i<0 || j<0 || i>=m || j>=n || grid[i][j]=='0') return;
         
-        set.add(i+"@"+j);
+        // set.add(i+"@"+j);
+        grid[i][j]='0';
         
         dfs(grid,i+1,j,set);
         dfs(grid,i,j+1,set);
