@@ -10,20 +10,22 @@
  */
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
+        ListNode tail=new ListNode();
+        tail.next=head;
+        ListNode newHead=tail;
+        ListNode curr=head;
+        while(curr!=null){
+            while(curr!=null && curr.val==val){
+                
+                curr=curr.next;
+            }
+            tail.next=curr;
+            if(curr!=null)
+            curr=curr.next;
+            tail=tail.next;
+        }
         
+        return newHead.next;
         
-        return helper(head,val);
     }
-    
-    private ListNode helper(ListNode head,int val){
-        if(head==null) return null;
-        // System.out.println(" head value is  :"+head.val);
-                ListNode secondNode=head.next;
-
-        if(head.val==val) return helper(secondNode,val);
-        head.next=helper(secondNode,val);
-        return head;
-        
-    }
-    
 }
