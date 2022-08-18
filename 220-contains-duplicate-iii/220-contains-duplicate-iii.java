@@ -37,7 +37,7 @@ class Solution {
             
           
             // if(map.keySet().size()>k) map.remove(((long)nums[i-k]-Integer.MIN_VALUE)/(long)(t+1));
-             if (map.entrySet().size() >= k) {
+             if (i >= k) {
                 long lastBucket = ((long) nums[i - k] - Integer.MIN_VALUE) / ((long) t + 1);
                 map.remove(lastBucket);
             }
