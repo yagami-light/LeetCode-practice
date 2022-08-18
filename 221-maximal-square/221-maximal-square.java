@@ -1,51 +1,29 @@
 class Solution {
+    Map<String,Integer> map=new HashMap();
     public int maximalSquare(char[][] matrix) {
+        if(matrix.length==0) return 0;
         int m=matrix.length;
         int n=matrix[0].length;
-        int max_ans=0;
-        
+        int max_res=0;
         for(int i=0;i<m;i++){
-            
             for(int j=0;j<n;j++){
-                if(matrix[i][j]=='1'){
-                boolean flag=true;
-                int curr=1;
-                
-                while(i+curr<m && j+curr<n && flag){
-                    
-                    for(int k=i;k<=i+curr;k++){
-                        
-                        if(matrix[k][j+curr]=='0'){
-                            flag=false;
-                            break;
-                        }
-                        
-                    }
-                    if(!flag) break;
-                    for(int k=j;k<=j+curr;k++){
-                        if(matrix[i+curr][k]=='0'){
-                            flag=false;
-                            break;
-                        }
-                        
-                    }
-                    if(!flag) break;
-                
-                    
-                    
-                   curr++; 
-                }
-                
-                max_ans=Math.max(max_ans,curr);
-                
-                
-                
-                
+                if(matrix[i][j]=='1')
+                max_res=Math.max(max_res,helper(matrix,i,j));
             }
-            
         }
-        }
+        return max_res*max_res;
         
-        return max_ans*max_ans;
     }
+    
+    private int helper(char[][] matrix,int i,int j){
+        if(i<0 || j<0 ||i>=matrix.length || j>=matrix[0].length) return 0;
+        
+        if(matrix[i][j]=='0') return 0;
+        String key=i+"@"+j;
+        if(map.containsKey(key)) return map.get(key);
+        int res= Math.min(Math.min(helper(matrix,i+1,j),helper(matrix,i,j+1)),helper(matrix,i+1,j+1))+1;
+        map.put(key,res);
+        return res;
+    }
+    
 }
