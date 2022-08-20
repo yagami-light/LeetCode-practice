@@ -11,12 +11,12 @@ class Solution {
         // System.out.println("print array : "+Arrays.toString(prefixMul));
          mul=1;
         for(int i=n-1;i>=0;i--){
-            res[i]= prefixMul[i]*mul;
+            prefixMul[i]= prefixMul[i]*mul;
              mul=mul*nums[i];
             
         }
         // nums[0] *=mul;
-        return res;
+        return prefixMul;
         
         
     }
