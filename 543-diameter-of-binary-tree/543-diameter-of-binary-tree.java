@@ -30,7 +30,7 @@ class Solution {
         
         int left=helper(root.left,max);
         int right=helper(root.right,max);
-        max[0]=Math.max(max[0],left+right);
+        max[0]=Math.max(max[0],Math.max(left+right,left+right));
         return Math.max(left,right)+1;
     }
     
