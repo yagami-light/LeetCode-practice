@@ -13,26 +13,31 @@
  *     }
  * }
  */
+
+// PostOrdr : left ,right ,root;
+
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        Stack<TreeNode> stack=new Stack();
-        LinkedList<Integer> res=new LinkedList();
+        
+        List<Integer> res=new ArrayList();
+        Deque<TreeNode> stack=new LinkedList();
         TreeNode curr=root;
-        while(!stack.isEmpty()|| curr!=null){
-            if(curr!=null){
-                stack.push(curr);
-                 res.addFirst(curr.val);
-                curr=curr.right;
-            }else{
-                curr=stack.pop();
-                curr=curr.left;
+        while(!stack.isEmpty() || curr!=null){
+            
+            while(curr!=null){
+            stack.push(curr);
+            res.add(0,curr.val);
+            curr=curr.right;
+                
             }
-           
+            
+            curr=stack.pop();
+            curr=curr.left;
+            
             
         }
         
         return res;
-        
         
     }
 }
