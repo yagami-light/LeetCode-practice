@@ -1,25 +1,22 @@
 class Solution {
     public int jump(int[] nums) {
-        int position=nums.length-1;
-        int steps=0;
-        while(position!=0){
+        
+        int farthestJump=0;
+        int jump=0;
+        int currEnd=0;
+        
+        for(int i=0;i<nums.length-1;i++){
             
-            for(int i=0;i<position;i++){
-                
-                if(i+nums[i]>=position){
-                    position=i;
-                    steps++;
-                    break;
-                }
-                
-                
+            farthestJump=Math.max(farthestJump,i+nums[i]);
+            if(i==currEnd){
+                jump++;
+                currEnd=farthestJump;
             }
             
             
         }
         
-        
-        return steps;
+        return jump;
         
     }
 }
