@@ -15,36 +15,27 @@
  */
 class Solution {
     public int diameterOfBinaryTree(TreeNode root) {
-        Deque<TreeNode> stack=new LinkedList();
-        stack.push(root);
-        int max=0;
-        Map<TreeNode,Integer> map=new HashMap();
-        while(!stack.isEmpty()){
-            
-            TreeNode node=stack.peek();
-            if(node.left!=null && !map.containsKey(node.left)){
-                stack.push(node.left);
-            }
-            else if(node.right!=null && !map.containsKey(node.right)){
-                stack.push(node.right);
-            }else{
-                
-                 node=stack.pop();
-                int left=map.getOrDefault(node.left,0);
-                int right=map.getOrDefault(node.right,0);
-                 int maxHeight=Math.max(left,right)+1;
-                map.put(node,maxHeight);
-                System.out.println("node value :"+node.val);
-                max=Math.max(max,left+right);
-                
-                
-            }
-            
-            
-            
-            
-        }
-        return max;
+        
+        return helper(root)[0];
+        
         
     }
+    
+    //best,height
+    private int[] helper(TreeNode root){
+        
+        if(root==null) return new int[]{0,0};
+        
+        int[] left=helper(root.left);
+        int[] right=helper(root.right);
+        
+        int height=Math.max(left[1],right[1])+1;
+        int best=Math.max(left[1]+right[1],Math.max(left[0],right[0]));
+        
+        return new int[]{best,height};
+        
+        
+        
+    }
+    
 }
