@@ -2,53 +2,84 @@ class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         int m=matrix.length;
         int n=matrix[0].length;
-        int dir=0;
-        int top=0;
-        int left=0;
-        int right=n-1;
-        int down=m-1;
-        List<Integer> res=new ArrayList();
+         List<Integer> res=new ArrayList();
+        int DIR=0;
+        int top=0, down=m-1, left=0, right=n-1;
         
-        while(left<=right && top<=down ){
+        while(top<=down && left <= right){
             
-            if(dir==0){
-               for(int i=left;i<=right;i++){
-                   res.add(matrix[top][i]);
-                   
-               } 
-               top++; 
+            if(DIR==0){
+            for(int i=left;i<=right;i++){
+                
+                res.add(matrix[top][i]);
                 
                 
                 
-            }
-            else if(dir==1){
-                for(int i=top;i<=down;i++){
-                    res.add(matrix[i][right]);
-                }
-                right--;
                 
             }
-            else if(dir==2){
+            top++;
                 
-                for(int i=right;i>=left;i--){
-                  
-                    res.add(matrix[down][i]);
-                }
-                  down--;
                 
-            }
-            else if(dir==3){
-                for(int i=down;i>=top;i--){
-                    res.add(matrix[i][left]);
-                }
-                left++;
             }
             
-            dir=(dir+1)%4;
+            if(DIR==1){
+                
+                 for(int i=top;i<=down;i++){
+                
+                res.add(matrix[i][right]);
+                
+                
+                
+                
+            }
+            right--;
+                
+                
+                
+                
+            }
+            
+            if(DIR==2){
+                
+                 for(int i=right;i>=left;i--){
+                
+                res.add(matrix[down][i]);
+                
+                
+                
+                
+            }
+            down--;
+                
+                
+                
+            }
+            
+            if(DIR==3){
+                
+                 for(int i=down;i>=top;i--){
+                
+                res.add(matrix[i][left]);
+                
+                
+                
+                
+            }
+            left++;
+                
+                
+                
+                
+            }
+            
+            
+            DIR=(DIR+1)%4;
+            
             
             
             
         }
+        
         
         return res;
         
