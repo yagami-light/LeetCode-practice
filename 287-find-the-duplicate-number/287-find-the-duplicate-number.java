@@ -13,13 +13,15 @@ class Solution {
         }
         
         fast=0;
-        while(slow!=fast){
+        while(fast!=slow){
+            
             fast=nums[fast];
             slow=nums[slow];
+            
         }
         
-        
         return slow;
+        
         
     }
 }
