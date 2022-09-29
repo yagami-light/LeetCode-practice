@@ -1,17 +1,15 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        
-        int n=nums.length;
-        int maxGlobal=Integer.MIN_VALUE;
-        int maxSoFar=0;
-        for(int i=0;i<n;i++){
+        int globalMax=Integer.MIN_VALUE;
+        int currSoFar=0;
+        for(int i:nums){
             
-             maxSoFar=Math.max(nums[i],maxSoFar+nums[i]);
-            maxGlobal=Math.max(maxGlobal,maxSoFar);
+            currSoFar=Math.max(i,currSoFar+i);
+            globalMax=Math.max(globalMax,currSoFar);
+            
             
         }
-        
-        return maxGlobal;
+        return globalMax;        
         
     }
 }
