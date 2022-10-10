@@ -13,7 +13,7 @@ class Solution {
             
         }
         
-        for(int i=1;i<=k;i++){
+        for(int i=1;i<k;i++){
             int[] node=pq.remove();
             int num=node[0];
             int row=node[1];
@@ -26,7 +26,7 @@ class Solution {
             }
         }
         
-        return ans;
+        return pq.remove()[0];
         
         
     }
